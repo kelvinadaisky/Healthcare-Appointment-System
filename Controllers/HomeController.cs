@@ -41,6 +41,10 @@ namespace Web_prog_Project.Controllers
         {
             return View();
         }
+        public IActionResult Login()
+        {
+            return View();
+        }
 
     }
 }
