@@ -2,10 +2,42 @@
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<style>
+    .image-background {
+        background-image: url('https://planbe.eco/wp-content/uploads/2024/08/plan_be_eco_Raportowanie-ESG-w-ochronie-zdrowia-i-branzy-farmaceutycznej_pl-1024x576.png');
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        position: relative;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.5); /* Optional: Darken overlay for readability */
+        padding: 20px;
+    }
+
+    .jumbotron {
+        margin-top: 0;
+    }
+
+</style>
+
+<section class="image-background">
+    <div class="overlay">
+        <h1 class="display-4">Pediatri Asistan Nöbet Yönetimi</h1>
+        <p class="lead">Hoşgeldiniz! Bu sistem pediatri asistanlarının nöbetlerini ve randevu takibini yapmanızı sağlar.</p>
+    </div>
+</section>
 
 <div class="jumbotron text-center">
-    <h1 class="display-4">Pediatri Asistan Nöbet Yönetimi</h1>
-    <p class="lead">Hoşgeldiniz! Bu sistem pediatri asistanlarının nöbetlerini ve randevu takibini yapmanızı sağlar.</p>
     <hr class="my-4">
     <p>Aşağıdaki bölümlerden dilediğinizi seçin:</p>
     <a class="btn btn-primary btn-lg" href="#" role="button">Asistanlar</a>
