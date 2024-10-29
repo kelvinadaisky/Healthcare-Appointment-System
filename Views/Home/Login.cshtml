@@ -3,5 +3,131 @@
     ViewData["Title"] = "Login";
 }
 
-<h1>Login</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | PediaCare Hub</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #6a89cc, #b8e994);
+        }
+
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100vh;
+        }
+
+        .login-box {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+            .input-group label {
+                font-size: 0.9rem;
+                color: #555;
+                display: block;
+                margin-bottom: 0.3rem;
+            }
+
+            .input-group input {
+                width: 100%;
+                padding: 0.8rem;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 1rem;
+            }
+
+        .login-button {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 5px;
+            background-color: #6a89cc;
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .login-button:hover {
+                background-color: #4a69bd;
+            }
+
+        .signup-text {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+            .signup-text a {
+                color: #6a89cc;
+                text-decoration: none;
+            }
+
+                .signup-text a:hover {
+                    text-decoration: underline;
+                }
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <h2>Welcome to PediaCare Hub</h2>
+            <p class="tagline">Pediatrics Duty Management System</p>
+            <form action="/dashboard" method="post">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-button">Log In</button>
+            </form>
+            <p class="signup-text">Don't have an account? <a href="/signup">Sign Up</a></p>
+        </div>
+    </div>
+</body>
+</html>
+
 

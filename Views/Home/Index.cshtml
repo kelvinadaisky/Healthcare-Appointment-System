@@ -2,63 +2,69 @@
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<style>
-    .image-background {
-        background-image: url('https://planbe.eco/wp-content/uploads/2024/08/plan_be_eco_Raportowanie-ESG-w-ochronie-zdrowia-i-branzy-farmaceutycznej_pl-1024x576.png');
-        background-size: cover;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        position: relative;
-    }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KidCare Navigator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .image-background {
+            background-image: url('https://planbe.eco/wp-content/uploads/2024/08/plan_be_eco_Raportowanie-ESG-w-ochronie-zdrowia-i-branzy-farmaceutycznej_pl-1024x576.png');
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
 
-    .overlay {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: white;
-        text-align: center;
-        background-color: rgba(0, 0, 0, 0.5); /* Optional: Darken overlay for readability */
-        padding: 20px;
-    }
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.5); /* Optional: Darken overlay for readability */
+            padding: 20px;
+        }
 
-    .description-section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 40px;
-        color: #333;
-        font-family: Arial, sans-serif;
-    }
+        .description-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
 
-    .description-text {
-        max-width: 60%;
-        line-height: 1.6;
-    }
+        .description-text {
+            max-width: 60%;
+            line-height: 1.6;
+        }
 
-    .description-text h2 {
-        color: #00ADEF; /* Example color, you may adjust */
-        font-size: 24px;
-        margin-bottom: 20px;
-    }
+        .description-text h2 {
+            color: #00ADEF; /* Example color, you may adjust */
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
 
-    .description-text p {
-        margin-bottom: 10px;
-    }
+        .description-text p {
+            margin-bottom: 10px;
+        }
 
-    .description-image {
-        max-width: 35%;
-        text-align: center;
-    }
+        .description-image {
+            max-width: 35%;
+            text-align: center;
+        }
 
-    .description-image img {
-        max-width: 100%;
-        height: auto;
-    }
+        .description-image img {
+            max-width: 100%;
+            height: auto;
+        }
 
-</style>
+    </style>
+</head>
 
 <section class="image-background">
     <div class="overlay">
