@@ -45,6 +45,10 @@ namespace Web_prog_Project.Controllers
         {
             return View();
         }
+        public IActionResult SignUp()
+        {
+            return View();
+        }
 
     }
 }

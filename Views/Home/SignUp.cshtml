@@ -1,7 +1,6 @@
-﻿
-@{
-    ViewBag.Title = "Login";
-    Layout  = "~/Views/Shared/_Layout.cshtml";
+﻿@{
+    ViewBag.Title = "Sign Up";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <style>
     * {
@@ -10,10 +9,7 @@
         box-sizing: border-box;
         font-family: Arial, sans-serif;
     }
-
-
-
-    .login-container {
+    .signup-container {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -21,7 +17,7 @@
         height: 100vh;
     }
 
-    .login-box {
+    .signup-box {
         background-color: #fff;
         padding: 2rem;
         border-radius: 8px;
@@ -62,7 +58,7 @@
         font-size: 1rem;
     }
 
-    .login-button {
+    .signup-button {
         width: 100%;
         padding: 0.8rem;
         border: none;
@@ -74,46 +70,50 @@
         transition: background-color 0.3s ease;
     }
 
-    .login-button:hover {
+    .signup-button:hover {
         background-color: #4a69bd;
     }
 
-    .signup-text {
+    .login-text {
         margin-top: 1.5rem;
         font-size: 0.9rem;
         color: #666;
     }
 
-    .signup-text a {
+    .login-text a {
         color: #6a89cc;
         text-decoration: none;
     }
 
-    .signup-text a:hover {
+    .login-text a:hover {
         text-decoration: underline;
     }
 
+
 </style>
-
-
-    <div class="login-container">
-        <div class="login-box">
-            <h2>Welcome to PediaCare Hub</h2>
-            <p class="tagline">Pediatrics Duty Management System</p>
-            <form action="/dashboard" method="post">
-                <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="input-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit" class="login-button">Log In</button>
-            </form>
-        <p class="signup-text">Don't have an account? <a href="@Url.Action("SignUp", "Home")">Sign Up</a></p>
-        </div>
+<div class="signup-container">
+    <div class="signup-box">
+        <h2>Create an Account</h2>
+        <p class="tagline">Join PediaCare Hub</p>
+        <form action="/welcome" method="post">
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="input-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm_password" required>
+            </div>
+            <button type="submit" class="signup-button">Sign Up</button>
+        </form>
+        <p class="login-text">Already have an account? <a href="@Url.Action("Login", "Home")">Log In</a></p>
     </div>
-
-
-
+</div>
