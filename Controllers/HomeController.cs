@@ -12,11 +12,6 @@ namespace Web_prog_Project.Controllers
             return View();
         }
 
-        public IActionResult Assistants()
-        {
-            return View();
-        }
-
         public IActionResult Professors()
         {
             return View();

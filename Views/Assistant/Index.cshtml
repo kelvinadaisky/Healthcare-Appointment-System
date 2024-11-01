@@ -1,7 +1,8 @@
 ﻿@{
-    ViewBag.Title = "Assistants";
+    ViewBag.Title = "Assistant";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model List<Assistant>
 <style>
     * {
         margin: 0;
@@ -22,20 +23,17 @@
         </tr>
     </thead>
     <tbody>
-        <!-- Example rows -->
+           @foreach(var obj in Model)
+        {
         <tr>
-            <td>Ahmet</td>
-            <td>Yılmaz</td>
-            <td>Çocuk Acil</td>
-            <td>+905555555555</td>
-            <td>ahmet@example.com</td>
+        <td>@obj.FirstName</td>
+        <td>@obj.LastName</td>
+        <td>@obj.Specialization</td>
+        <td>@obj.Phone</td>
+        <td>@obj.Email</td>
         </tr>
-        <tr>
-            <td>Ayşe</td>
-            <td>Kara</td>
-            <td>Çocuk Yoğun Bakımı</td>
-            <td>+905444444444</td>
-            <td>ayse@example.com</td>
-        </tr>
+        }
+       
+
     </tbody>
 </table>
