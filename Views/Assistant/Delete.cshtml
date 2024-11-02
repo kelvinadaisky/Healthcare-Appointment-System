@@ -1,41 +1,36 @@
 ﻿@model Assistant
 
 <form method="post">
-
+    <input asp-for="AssistantId" hidden>
     <div class="border p-3 mt-4">
         <div class="row pb-2">
-            <h2 class="text-primary">Add Assistant</h2>
+            <h2 class="text-primary">Delete Assistant</h2>
             <hr />
         </div>
         <div class="mb-3 row p-1">
             <label asp-for="FirstName" class="p-0"></label>
-            <input asp-for="FirstName" class="form-control" />
-            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <input asp-for="FirstName" disabled class="form-control" />
         </div>
         <div class="mb-3 row p-1">
             <label asp-for="LastName" class="p-0"></label>
-            <input asp-for="LastName" class="form-control" />
-            <span asp-validation-for="LastName" class="text-danger"></span>
+            <input asp-for="LastName" disabled class="form-control" />
         </div>
         <div class="mb-3 row p-1">
             <label asp-for="Specialization" class="p-0"></label>
-            <input asp-for="Specialization" class="form-control" />
-            <span asp-validation-for="Specialization" class="text-danger"></span>
+            <input asp-for="Specialization" disabled class="form-control" />
         </div>
         <div class="mb-3 row p-1">
             <label asp-for="Phone" class="p-0"></label>
-            <input asp-for="Phone" class="form-control" />
-            <span asp-validation-for="Phone" class="text-danger"></span>
+            <input asp-for="Phone" disabled class="form-control" />
         </div>
         <div class="mb-3 row p-1">
             <label asp-for="Email" class="p-0"> </label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
+            <input asp-for="Email" disabled class="form-control" />
         </div>
 
         <div class="row">
             <div class="col-6 col-md-3">
-                <button type="submit" class="btn btn-primary form-control">Create</button>
+                <button type="submit" class="btn btn-danger form-control">Delete</button>
             </div>
             <div class="col-6 col-md-3">
                 <a asp-controller="Assistant" asp-action="Index" class="btn btn-secondary border  form-control">
@@ -47,9 +42,3 @@
 
     </div>
 </form>
-
-@section Scripts {
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
-}
