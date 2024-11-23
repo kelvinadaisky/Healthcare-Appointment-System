@@ -27,6 +27,7 @@ namespace Web_prog_Project.Controllers
             {
                 _db.Assistants.Add(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Assistant added successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -52,6 +53,7 @@ namespace Web_prog_Project.Controllers
             {
                 _db.Assistants.Update(obj);
                 _db.SaveChanges();
+                TempData["success"] = "Assistant updated successfully";
                 return RedirectToAction("Index");
             }
             return View();
@@ -80,6 +82,7 @@ namespace Web_prog_Project.Controllers
             }
             _db.Assistants.Remove(obj);
             _db.SaveChanges();
+            TempData["success"] = "Assistant deleted successfully";
             return RedirectToAction("Index");
 
         }
