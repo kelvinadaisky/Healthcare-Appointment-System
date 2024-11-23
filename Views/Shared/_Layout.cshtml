@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<Web_prog_Project.Models.ApplicationUser> signInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -26,8 +28,20 @@
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Schedule", "Home")">Schedule</a></li>
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Appointments", "Home")">Appointments</a></li>
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Emergencies", "Home")">Emergencies</a></li>
-                        <li class="nav-item"><a class="btn btn-outline-light ms-2" href="@Url.Action("Login", "Home")">Log in</a></li>
-                        <li class="nav-item"><a class="btn btn-warning ms-2" href="@Url.Action("SignUp", "Home")">Sign up</a></li>
+                        @if (signInManager.IsSignedIn(User))
+                        {
+                                    <li class="nav-item text-white nav-link">Hello, @User.Identity.Name! </li>
+                                    <li>
+                                        <form asp-action="LogOff" asp-controller="Account" method="post" class="d-inline">
+                                            <button type="submit" class="nav-item text-white nav-link btn btn-warning ms-2">Log off</button>
+                                        </form>
+                                    </li>                        }
+                        else
+                        {
+                            <li class="nav-item"><a class="btn btn-outline-light ms-2" id="loginLink" href="@Url.Action("Login", "Account")">Log in</a></li>
+                            <li class="nav-item"><a class="btn btn-warning ms-2" id="registerLink" href="@Url.Action("Register", "Account")">Sign up</a></li>
+                        }
+                        
                     </ul>
                 </div>
             </div>
@@ -79,6 +93,6 @@
         </div>
     </footer>  -->
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
