@@ -1,4 +1,5 @@
-﻿using Web_prog_Project.Data;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
+using Web_prog_Project.Data;
 using Web_prog_Project.Models;
 using Web_prog_Project.Utility;
 
@@ -49,6 +50,7 @@ namespace Web_prog_Project.Services
                     IsDoctorApproved = false,
                     AdminId = model.AdminId
                 };
+
                 _db.Appointments.Add(appointment);
                 await _db.SaveChangesAsync();
                 return 2;

@@ -1,24 +1,28 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Web_prog_Project.Utility
 {
     public static class Helper
     {
-        public static string Admin = "Admin";
-        public static string Patient = "Patient";
-        public static string Doctor = "Doctor";
-        public static string appointmentAdded = "Appointment added successfully.";
-        public static string appointmentUpdated = "Appointment updated successfully.";
-        public static string appointmentDeleted = "Appointment deleted successfully.";
-        public static string appointmentExists = "Appointment for selected date and time already exists.";
-        public static string appointmentNotExists = "Appointment not exists.";
-        public static string meetingConfirm = "Meeting confirm successfully.";
-        public static string meetingConfirmError = "Error while confirming meeting.";
-        public static string appointmentAddError = "Something went wront, Please try again.";
-        public static string appointmentUpdatError = "Something went wront, Please try again.";
-        public static string somethingWentWrong = "Something went wront, Please try again.";
-        public static int success_code = 1;
-        public static int failure_code = 0;
+        public const string Admin = "Admin";
+        public const string Patient = "Patient";
+        public const string Doctor = "Doctor";
+        public const string appointmentAdded = "Appointment added successfully.";
+        public const string appointmentUpdated = "Appointment updated successfully.";
+        public const string appointmentDeleted = "Appointment deleted successfully.";
+        public const string appointmentExists = "Appointment for selected date and time already exists.";
+        public const string appointmentNotExists = "Appointment not exists.";
+        public const string meetingConfirm = "Meeting confirm successfully.";
+        public const string meetingConfirmError = "Error while confirming meeting.";
+        public const string appointmentAddError = "Something went wront, Please try again.";
+        public const string appointmentUpdatError = "Something went wront, Please try again.";
+        public const string somethingWentWrong = "Something went wront, Please try again.";
+        public const int success_code = 1;
+        public const int failure_code = 0;
 
         public static List<SelectListItem> GetRolesForDropDown(bool isAdmin)
         {
@@ -34,8 +38,7 @@ namespace Web_prog_Project.Utility
                 return new List<SelectListItem>
                 {
                     new SelectListItem{Value=Helper.Patient,Text=Helper.Patient},
-                    new SelectListItem{Value=Helper.Doctor,Text=Helper.Doctor},
-                    new SelectListItem{Value=Helper.Admin,Text=Helper.Admin}
+                    new SelectListItem{Value=Helper.Doctor,Text=Helper.Doctor}
                 };
             }
         }

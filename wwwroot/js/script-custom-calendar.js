@@ -1,4 +1,5 @@
 ﻿var routeURL = location.protocol + "//" + location.host;
+
 $(document).ready(function () {
     $("#appointmentDate").kendoDateTimePicker({
         value: new Date(),
@@ -7,11 +8,11 @@ $(document).ready(function () {
 
     InitializeCalendar();
 });
+
 var calendar;
+
 function InitializeCalendar() {
     try {
-
-
         var calendarEl = document.getElementById('calendar');
         if (calendarEl != null) {
             calendar = new FullCalendar.Calendar(calendarEl, {
@@ -33,25 +34,25 @@ function InitializeCalendar() {
                         type: 'GET',
                         dataType: 'JSON',
                         success: function (response) {
-                            var events = [];
                             if (response.status === 1) {
-                                $.each(response.dataenum, function (i, data) {
-                                    events.push({
-                                        title: data.title,
-                                        description: data.description,
-                                        start: data.startDate,
-                                        end: data.endDate,
-                                        backgroundColor: data.isDoctorApproved ? "#28a745" : "#dc3545",
-                                        borderColor: "#162466",
-                                        textColor: "white",
-                                        id: data.id
-                                    });
-                                })
+                                var events = response.dataenum.map(data => ({
+                                    title: data.title,
+                                    description: data.description,
+                                    start: data.startDate,
+                                    end: data.endDate,
+                                    backgroundColor: data.isDoctorApproved ? "#28a745" : "#dc3545",
+                                    borderColor: "#162466",
+                                    textColor: "white",
+                                    id: data.id
+                                }));
+                                successCallback(events);
+                            } else {
+                                $.notify(response.message, "error");
                             }
-                            successCallback(events);
                         },
-                        error: function (xhr) {
-                            $.notify("Error", "error");
+                        error: function () {
+                            $.notify("Error loading calendar data", "error");
+                            failureCallback();
                         }
                     });
                 },
@@ -61,18 +62,13 @@ function InitializeCalendar() {
             });
             calendar.render();
         }
-
+    } catch (e) {
+        alert("An error occurred while initializing the calendar: " + e.message);
     }
-    catch (e) {
-        alert(e);
-    }
-
 }
 
-
 function onShowModal(obj, isEventDetail) {
-    if (isEventDetail != null) {
-
+    if (isEventDetail) {
         $("#title").val(obj.title);
         $("#description").val(obj.description);
         $("#appointmentDate").val(obj.startDate);
@@ -82,35 +78,17 @@ function onShowModal(obj, isEventDetail) {
         $("#id").val(obj.id);
         $("#lblPatientName").html(obj.patientName);
         $("#lblDoctorName").html(obj.doctorName);
-        if (obj.isDoctorApproved) {
-            $("#lblStatus").html('Approved');
-            $("#btnConfirm").addClass("d-none");
-            $("#btnSubmit").addClass("d-none");
-        }
-        else {
-            $("#lblStatus").html('Pending');
-            $("#btnConfirm").removeClass("d-none");
-            $("#btnSubmit").removeClass("d-none");
-        }
+        $("#lblStatus").html(obj.isDoctorApproved ? 'Approved' : 'Pending');
+        $("#btnConfirm").toggleClass("d-none", obj.isDoctorApproved);
+        $("#btnSubmit").removeClass("d-none");
         $("#btnDelete").removeClass("d-none");
-    }
-    else {
-        $("#appointmentDate").val(obj.startStr + " " + new moment().format("hh:mm A"));
+    } else {
+        $("#appointmentDate").val(obj.startStr + " " + moment().format("hh:mm A"));
         $("#id").val(0);
         $("#btnDelete").addClass("d-none");
         $("#btnSubmit").removeClass("d-none");
     }
     $("#appointmentInput").modal("show");
-}
-
-function onCloseModal() {
-    $("#apointmentForm")[0].reset();
-    $("#id").val(0);
-    $("#title").val('');
-    $("#description").val('');
-    $("#appointmentDate").val('');
-
-    $("#appointmentInput").modal("hide");
 }
 
 function onSubmitForm() {
@@ -122,7 +100,7 @@ function onSubmitForm() {
             StartDate: $("#appointmentDate").val(),
             Duration: $("#duration").val(),
             DoctorId: $("#doctorId").val(),
-            PatientId: $("#patientId").val(),
+            PatientId: $("#patientId").val()
         };
 
         $.ajax({
@@ -135,13 +113,16 @@ function onSubmitForm() {
                     calendar.refetchEvents();
                     $.notify(response.message, "success");
                     onCloseModal();
-                }
-                else {
+                } else {
                     $.notify(response.message, "error");
                 }
             },
             error: function (xhr) {
-                $.notify("Error", "error");
+                var errorMsg = "Error saving appointment";
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    errorMsg = xhr.responseJSON.message;
+                }
+                $.notify(errorMsg, "error");
             }
         });
     }
@@ -149,92 +130,42 @@ function onSubmitForm() {
 
 function checkValidation() {
     var isValid = true;
-    if ($("#title").val() === undefined || $("#title").val() === "") {
+
+    // Validate Title
+    if ($("#title").val().trim() === "") {
         isValid = false;
         $("#title").addClass('error');
-    }
-    else {
+    } else {
         $("#title").removeClass('error');
     }
 
-    if ($("#appointmentDate").val() === undefined || $("#appointmentDate").val() === "") {
+    // Validate Appointment Date
+    if ($("#appointmentDate").val().trim() === "") {
         isValid = false;
         $("#appointmentDate").addClass('error');
-    }
-    else {
+    } else {
         $("#appointmentDate").removeClass('error');
     }
 
     return isValid;
-
 }
 
-function getEventDetailsByEventId(info) {
-    $.ajax({
-        url: routeURL + '/api/Appointment/GetCalendarDataById/' + info.id,
-        type: 'GET',
-        dataType: 'JSON',
-        success: function (response) {
-
-            if (response.status === 1 && response.dataenum !== undefined) {
-                onShowModal(response.dataenum, true);
-            }
-            successCallback(events);
-        },
-        error: function (xhr) {
-            $.notify("Error", "error");
-        }
-    });
+function onCloseModal() {
+    $("#appointmentInput").modal("hide");
+    clearForm();
 }
 
-function onDoctorChange() {
-    calendar.refetchEvents();
-}
-
-function onDeleteAppointment() {
-    var id = parseInt($("#id").val());
-    $.ajax({
-        url: routeURL + '/api/Appointment/DeleteAppoinment/' + id,
-        type: 'GET',
-        dataType: 'JSON',
-        success: function (response) {
-
-            if (response.status === 1) {
-                $.notify(response.message, "success");
-                calendar.refetchEvents();
-                onCloseModal();
-            }
-            else {
-
-                $.notify(response.message, "error");
-            }
-        },
-        error: function (xhr) {
-            $.notify("Error", "error");
-        }
-    });
-}
-
-function onConfirm() {
-    var id = parseInt($("#id").val());
-    $.ajax({
-        url: routeURL + '/api/Appointment/ConfirmEvent/' + id,
-        type: 'GET',
-        dataType: 'JSON',
-        success: function (response) {
-
-            if (response.status === 1) {
-                $.notify(response.message, "success");
-                calendar.refetchEvents();
-                onCloseModal();
-            }
-            else {
-
-                $.notify(response.message, "error");
-            }
-        },
-        error: function (xhr) {
-            $.notify("Error", "error");
-        }
-    });
+function clearForm() {
+    $("#title").val('');
+    $("#description").val('');
+    $("#appointmentDate").val('');
+    $("#duration").val('');
+    $("#doctorId").val('');
+    $("#patientId").val('');
+    $("#id").val('');
+    $("#lblPatientName").html('');
+    $("#lblDoctorName").html('');
+    $("#lblStatus").html('');
+    $("#btnConfirm").addClass("d-none");
+    $("#btnDelete").addClass("d-none");
 }

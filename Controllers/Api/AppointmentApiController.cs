@@ -1,5 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Web_prog_Project.Models;
 using Web_prog_Project.Services;
 using Web_prog_Project.Utility;
@@ -74,7 +79,8 @@ namespace Web_prog_Project.Controllers.Api
             }
             catch (Exception e)
             {
-                commonResponse.message = e.Message;
+                // Log the detailed exception
+                commonResponse.message = $"{e.Message} - InnerException: {e.InnerException?.Message}";
                 commonResponse.status = Helper.failure_code;
             }
             return Ok(commonResponse);
