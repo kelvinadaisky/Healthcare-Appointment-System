@@ -1,7 +1,26 @@
-﻿@model List<Department>
+﻿@{
+    ViewBag.Title = "Department";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Department>
 
-<h2>Departments</h2>
-<a asp-action="Create" class="btn btn-primary">Add Department</a>
+<div class="container">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">
+                Department List
+            </h2>
+        </div>
+        @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
+        {
+            <div class="col-6 text-end">
+                <a asp-controller="Department" asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Add New Department
+                </a>
+            </div>
+        }
+
+    </div>
 
 <table class="table">
     <thead>
@@ -11,15 +30,26 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var department in Model)
+            @foreach (var obj in Model)
         {
             <tr>
-                <td>@department.Name</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@department.DepartmentId">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@department.DepartmentId">Delete</a>
-                </td>
+                <td>@obj.Name</td>
+                    @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
+                    {
+                        <td>
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-controller="Department" asp-action="Edit" asp-route-id="@obj.DepartmentId" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a asp-controller="Department" asp-action="Delete" asp-route-id="@obj.DepartmentId" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    }
             </tr>
         }
     </tbody>
 </table>
+
+</div>

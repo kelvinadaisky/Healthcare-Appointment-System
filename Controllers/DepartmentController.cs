@@ -35,12 +35,6 @@ namespace Web_prog_Project.Controllers
                 TempData["success"] = "Department added successfully";
                 return RedirectToAction("Index");
             }
-
-                foreach (var error in ModelState.Values.SelectMany(v => v.Errors))
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
-
             return View();
         }
 
@@ -50,7 +44,7 @@ namespace Web_prog_Project.Controllers
             {
                 return NotFound();
             }
-            Department? department = _db.Departments.FirstOrDefault(d => d.DepartmentId == id);
+            Department? department = _db.Departments.Find(id);
             if (department == null)
             {
                 return NotFound();
@@ -59,11 +53,11 @@ namespace Web_prog_Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Department department)
+        public IActionResult Edit(Department obj)
         {
             if (ModelState.IsValid)
             {
-                _db.Departments.Update(department);
+                _db.Departments.Update(obj);
                 _db.SaveChanges();
                 TempData["success"] = "Department updated successfully";
                 return RedirectToAction("Index");
@@ -73,23 +67,23 @@ namespace Web_prog_Project.Controllers
 
         public IActionResult Delete(int? id)
         {
-            Department? department = _db.Departments.FirstOrDefault(d => d.DepartmentId == id);
-            if (department == null)
+            Department? obj = _db.Departments.Find(id);
+            if (obj == null)
             {
                 return NotFound();
             }
-            return View(department);
+            return View(obj);
         }
 
-        [HttpPost]
+        [HttpPost,ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
-            var department = _db.Departments.FirstOrDefault(d => d.DepartmentId == id);
-            if (department == null)
+            var obj = _db.Departments.Find(id);
+            if (obj == null)
             {
                 return NotFound();
             }
-            _db.Departments.Remove(department);
+            _db.Departments.Remove(obj);
             _db.SaveChanges();
             TempData["success"] = "Department deleted successfully";
             return RedirectToAction("Index");
