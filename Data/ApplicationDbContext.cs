@@ -19,6 +19,8 @@ namespace Web_prog_Project.Data
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Assistant> Assistants { get; set; }
         public DbSet<FacultyMember> FacultyMembers { get; set; }
+        public DbSet<Department> Departments { get; set; }
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -46,6 +48,11 @@ namespace Web_prog_Project.Data
                     Specialization = "baby"
                 }
             );
+
+            modelBuilder.Entity<FacultyMember>()
+                .HasOne(f => f.Department)
+                .WithMany()
+                .HasForeignKey(f => f.DepartmentId);
         }
     }
 }

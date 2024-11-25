@@ -21,12 +21,6 @@
         </div>
 
         <div class="mb-3 row p-1">
-            <label asp-for="Department" class="p-0"></label>
-            <input asp-for="Department" class="form-control" />
-            <span asp-validation-for="Department" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3 row p-1">
             <label asp-for="Phone" class="p-0"></label>
             <input asp-for="Phone" class="form-control" />
             <span asp-validation-for="Phone" class="text-danger"></span>
@@ -39,9 +33,9 @@
         </div>
 
         <div class="mb-3 row p-1">
-            <label asp-for="OfficeHours" class="p-0"></label>
-            <input asp-for="OfficeHours" class="form-control" />
-            <span asp-validation-for="OfficeHours" class="text-danger"></span>
+            <label asp-for="DepartmentId" class="p-0">Department</label>
+            <select asp-for="DepartmentId" asp-items="ViewBag.DepartmentId" class="form-control"></select>
+            <span asp-validation-for="DepartmentId" class="text-danger"></span>
         </div>
 
         <div class="row">
@@ -57,9 +51,3 @@
 
     </div>
 </form>
-
-@section Scripts {
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
-}

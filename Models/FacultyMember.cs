@@ -17,13 +17,12 @@ namespace Web_prog_Project.Models
         [MaxLength(30)]
         public string LastName { get; set; }
 
-        public string Department { get; set; }
-
         public string Phone { get; set; }
 
         public string Email { get; set; }
 
-        [DisplayName("Office Hours")]
-        public string OfficeHours { get; set; }
+        // Foreign Key for Department
+        public int DepartmentId { get; set; }
+        public Department Department { get; set; }
     }
 }
