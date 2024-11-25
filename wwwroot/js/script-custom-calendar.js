@@ -10,7 +10,6 @@ $(document).ready(function () {
 });
 
 var calendar;
-
 function InitializeCalendar() {
     try {
         var calendarEl = document.getElementById('calendar');
@@ -57,7 +56,12 @@ function InitializeCalendar() {
                     });
                 },
                 eventClick: function (info) {
-                    getEventDetailsByEventId(info.event);
+                    console.log("Event clicked:", info.event);
+                    if (info.event) {
+                        getEventDetailsByEventId(info.event);
+                    } else {
+                        console.error("Event information is missing.");
+                    }
                 }
             });
             calendar.render();
@@ -68,8 +72,8 @@ function InitializeCalendar() {
 }
 
 function onShowModal(obj, isEventDetail) {
-    if (isEventDetail) {
-        $("#title").val(obj.title);
+    if (isEventDetail != null) {
+        $("#title").val(obj.title); 
         $("#description").val(obj.description);
         $("#appointmentDate").val(obj.startDate);
         $("#duration").val(obj.duration);
@@ -168,4 +172,22 @@ function clearForm() {
     $("#lblStatus").html('');
     $("#btnConfirm").addClass("d-none");
     $("#btnDelete").addClass("d-none");
+}
+ 
+function getEventDetailsByEventId(info) {
+    $.ajax({
+        url: routeURL + '/api/Appointment/GetCalendarDataById/' + info.id,
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (response) {
+
+            if (response.status === 1 && response.dataenum !== undefined) {
+                onShowModal(response.dataenum, true);
+            }
+            successCallback(events);
+        },
+        error: function (xhr) {
+            $.notify("Error", "error");
+        }
+    });
 }

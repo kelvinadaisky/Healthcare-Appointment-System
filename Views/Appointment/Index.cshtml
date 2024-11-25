@@ -40,3 +40,35 @@
 <div class="text-right pt-2">
     <p>@HttpContextAccessor.HttpContext.Session.GetString("ssuserName")'s account is logged in</p>
 </div>
+
+<script>
+    // Inline script to handle doctor changes
+    function onDoctorChange() {
+        console.log("Doctor changed");
+        if (typeof calendar !== 'undefined' && calendar) {
+            calendar.refetchEvents();
+        }
+        // Assuming you have the doctor ID from the dropdown, you can call getEventDetailsByEventId here
+        var doctorId = document.getElementById('doctorId').value;
+        getEventDetailsByEventId(doctorId);  // Call the function with the doctor ID
+    }
+
+    // Function to get event details by event ID
+    function getEventDetailsByEventId(info) {
+    $.ajax({
+        url: routeURL + '/api/Appointment/GetCalendarDataById/' + info.id,
+        type: 'GET',
+        dataType: 'JSON',
+        success: function (response) {
+
+            if (response.status === 1 && response.dataenum !== undefined) {
+                onShowModal(response.dataenum, true);
+            }
+            successCallback(events);
+        },
+        error: function (xhr) {
+            $.notify("Error", "error");
+        }
+    });
+}
+</script>
