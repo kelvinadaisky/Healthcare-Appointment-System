@@ -18,6 +18,8 @@ namespace Web_prog_Project.Data
         // DbSet properties should be at the class level
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Assistant> Assistants { get; set; }
+        public DbSet<FacultyMember> FacultyMembers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

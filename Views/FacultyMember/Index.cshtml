@@ -1,0 +1,63 @@
+﻿@model List<FacultyMember>
+@{
+    ViewBag.Title = "Faculty Member";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">
+                Faculty Members List
+            </h2>
+        </div>
+        @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
+        {
+            <div class="col-6 text-end">
+                <a asp-controller="FacultyMember" asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Add New Faculty Member
+                </a>
+            </div>
+        }
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Department</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Office Hours</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var obj in Model)
+            {
+                <tr>
+                    <td>@obj.FirstName</td>
+                    <td>@obj.LastName</td>
+                    <td>@obj.Department</td>
+                    <td>@obj.Phone</td>
+                    <td>@obj.Email</td>
+                    <td>@obj.OfficeHours</td>
+                    @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
+                    {
+                        <td>
+                            <div class="w-75 btn-group" role="group">
+                                <a asp-controller="FacultyMember" asp-action="Edit" asp-route-id="@obj.FacultyMemberId" class="btn btn-primary mx-2">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                                <a asp-controller="FacultyMember" asp-action="Delete" asp-route-id="@obj.FacultyMemberId" class="btn btn-danger mx-2">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

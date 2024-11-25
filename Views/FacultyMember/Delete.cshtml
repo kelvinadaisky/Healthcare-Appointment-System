@@ -1,0 +1,52 @@
+﻿@model FacultyMember
+
+<form method="post">
+    <input asp-for="FacultyMemberId" type="hidden" />
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary">Delete Faculty Member</h2>
+            <hr />
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="FirstName" class="p-0"></label>
+            <input asp-for="FirstName" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="LastName" class="p-0"></label>
+            <input asp-for="LastName" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="Department" class="p-0"></label>
+            <input asp-for="Department" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="Phone" class="p-0"></label>
+            <input asp-for="Phone" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="Email" class="p-0"></label>
+            <input asp-for="Email" disabled class="form-control" />
+        </div>
+
+        <div class="mb-3 row p-1">
+            <label asp-for="OfficeHours" class="p-0"></label>
+            <input asp-for="OfficeHours" disabled class="form-control" />
+        </div>
+
+        <div class="row">
+            <div class="col-6 col-md-3">
+                <button type="submit" class="btn btn-danger form-control">Delete</button>
+            </div>
+            <div class="col-6 col-md-3">
+                <a asp-controller="FacultyMember" asp-action="Index" class="btn btn-secondary border form-control">
+                    Back to List
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
