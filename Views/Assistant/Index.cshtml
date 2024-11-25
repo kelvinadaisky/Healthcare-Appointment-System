@@ -12,11 +12,15 @@
                 Assistant List
             </h2>
         </div>
-        <div class="col-6 text-end">
-            <a asp-controller="Assistant" asp-action="Create" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Add New Assistant
-            </a>
-        </div>
+        @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
+        {
+            <div class="col-6 text-end">
+                <a asp-controller="Assistant" asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> Add New Assistant
+                </a>
+            </div>
+        }
+       
     </div>
 
 
@@ -39,16 +43,22 @@
         <td>@obj.Specialization</td>
         <td>@obj.Phone</td>
         <td>@obj.Email</td>
-        <td>
-            <div class="w-75 btn-group" role="group">
-                <a asp-controller="Assistant" asp-action="Edit" asp-route-id="@obj.AssistantId" class="btn btn-primary mx-2">
-                    <i class="bi bi-pencil-square"></i> Edit
-                </a>
-                            <a asp-controller="Assistant" asp-action="Delete" asp-route-id="@obj.AssistantId" class="btn btn-danger mx-2">
-                    <i class="bi bi-trash-fill"></i> Delete
-                </a>
-            </div>
-        </td>
+
+        @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
+        {
+            <td>
+                <div class="w-75 btn-group" role="group">
+                    <a asp-controller="Assistant" asp-action="Edit" asp-route-id="@obj.AssistantId" class="btn btn-primary mx-2">
+                        <i class="bi bi-pencil-square"></i> Edit
+                    </a>
+                    <a asp-controller="Assistant" asp-action="Delete" asp-route-id="@obj.AssistantId" class="btn btn-danger mx-2">
+                        <i class="bi bi-trash-fill"></i> Delete
+                    </a>
+                </div>
+            </td>
+        }
+
+      
                     
         </tr>
         }
