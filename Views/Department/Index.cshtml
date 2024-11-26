@@ -22,11 +22,12 @@
 
     </div>
 
-<table class="table">
+    <table class="table table-striped">
     <thead>
         <tr>
             <th>Name</th>
-            <th>Actions</th>
+            <th>Available Beds</th>
+            <th>Number Of Patients</th>
         </tr>
     </thead>
     <tbody>
@@ -34,6 +35,8 @@
         {
             <tr>
                 <td>@obj.Name</td>
+                <td>@obj.AvailableBeds</td>
+                <td>@obj.NumberOfPatients</td>
                     @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
                     {
                         <td>

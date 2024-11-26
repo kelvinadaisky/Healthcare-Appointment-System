@@ -8,8 +8,13 @@ namespace Web_prog_Project.Models
         public int DepartmentId { get; set; }
         [Required]
         public string Name { get; set; }
-        [MaxLength(500, ErrorMessage = "Description cannot exceed 500 characters.")]
-        public string Description { get; set; }
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Available beds must be a positive number.")]
+        public int AvailableBeds { get; set; }
+        [Required]
+        [Range(0, int.MaxValue, ErrorMessage = "Number of patients must be a positive number.")]
+        public int NumberOfPatients { get; set; }
+
     }
 
 }

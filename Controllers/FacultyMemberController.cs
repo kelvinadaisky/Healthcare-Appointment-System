@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Web_prog_Project.Data;
 using Web_prog_Project.Models;
 
@@ -21,6 +22,7 @@ namespace Web_prog_Project.Controllers
 
         public IActionResult Create()
         {
+            ViewBag.Departments = new SelectList(_db.Departments, "DepartmentId", "Name");
             return View();
         }
 

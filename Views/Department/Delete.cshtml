@@ -14,10 +14,18 @@
 
         </div>
 
-        <div class="mb-3">
-            <label asp-for="Description" class="form-label"></label>
-            <textarea asp-for="Description" disabled class="form-control"></textarea>
-            <span asp-validation-for="Description" class="text-danger"></span>
+        <!-- Available Beds -->
+        <div class="mb-3 row p-1">
+            <label asp-for="AvailableBeds" class="p-0"></label>
+            <input asp-for="AvailableBeds" disabled class="form-control" type="number" />
+            <span asp-validation-for="AvailableBeds" class="text-danger"></span>
+        </div>
+
+        <!-- Number of Patients -->
+        <div class="mb-3 row p-1">
+            <label asp-for="NumberOfPatients" class="p-0"></label>
+            <input asp-for="NumberOfPatients" disabled class="form-control" type="number" />
+            <span asp-validation-for="NumberOfPatients" class="text-danger"></span>
         </div>
 
         <div class="row">

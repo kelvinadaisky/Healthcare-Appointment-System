@@ -20,10 +20,11 @@
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
 
+        <!-- Department Dropdown -->
         <div class="mb-3 row p-1">
-            <label asp-for="Department" class="p-0"></label>
-            <input asp-for="Department" class="form-control" />
-            <span asp-validation-for="Department" class="text-danger"></span>
+            <label asp-for="DepartmentId" class="p-0"></label>
+            <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-control"></select>
+            <span asp-validation-for="DepartmentId" class="text-danger"></span>
         </div>
 
         <div class="mb-3 row p-1">
