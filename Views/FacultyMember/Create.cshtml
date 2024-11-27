@@ -1,4 +1,5 @@
-﻿@model FacultyMember
+﻿@model Web_prog_Project.Models.FacultyMember
+
 
 <form method="post">
 
@@ -21,9 +22,11 @@
         </div>
 
         <!-- Department Dropdown -->
-        <div class="mb-3 row p-1">
-            <label asp-for="DepartmentId" class="p-0"></label>
-            <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-control"></select>
+        <div class="mb-3">
+            <label asp-for="DepartmentId" class="form-label">Department</label>
+            <select asp-for="DepartmentId" asp-items="@(ViewData["Departments"] as List<SelectListItem>)" class="form-control">
+                <option value="">-- Select Department --</option>
+            </select>
             <span asp-validation-for="DepartmentId" class="text-danger"></span>
         </div>
 

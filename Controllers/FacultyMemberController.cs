@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Web_prog_Project.Data;
+using Web_prog_Project.Models.ViewModels;
 using Web_prog_Project.Models;
+
 
 namespace Web_prog_Project.Controllers
 {
@@ -14,29 +17,60 @@ namespace Web_prog_Project.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            List<FacultyMember> objFacultyList = _db.FacultyMembers.ToList();
-            return View(objFacultyList);
+                var facultyMembers = await _db.FacultyMembers
+                 .Join(
+                     _db.Departments,
+                     fm => fm.DepartmentId,
+                     d => d.DepartmentId,
+                     (fm, d) => new FacultyMemberWithDepartment
+                     {
+                         FacultyMemberId = fm.FacultyMemberId,
+                         FirstName = fm.FirstName,
+                         LastName = fm.LastName,
+                         Phone = fm.Phone,
+                         Email = fm.Email,
+                         DepartmentName = d.Name
+                     }
+                 )
+                 .ToListAsync();
+
+            return View(facultyMembers);
         }
 
         public IActionResult Create()
         {
-            ViewBag.Departments = new SelectList(_db.Departments, "DepartmentId", "Name");
+            // Populate Departments for the dropdown
+            ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
+            {
+                Value = d.DepartmentId.ToString(),
+                Text = d.Name
+            }).ToList();
+
             return View();
         }
 
         [HttpPost]
-        public IActionResult Create(FacultyMember obj)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(FacultyMember obj)
         {
             if (ModelState.IsValid)
             {
                 _db.FacultyMembers.Add(obj);
-                _db.SaveChanges();
-                TempData["success"] = "Faculty member added successfully";
+                await _db.SaveChangesAsync();
+                TempData["success"] = "Faculty member updated successfully";
                 return RedirectToAction("Index");
             }
-            return View();
+
+            // Repopulate Departments if model validation fails
+            ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
+            {
+                Value = d.DepartmentId.ToString(),
+                Text = d.Name
+            }).ToList();
+
+            return View(obj);
         }
 
         public IActionResult Edit(int? id)
@@ -50,6 +84,13 @@ namespace Web_prog_Project.Controllers
             {
                 return NotFound();
             }
+            // Populate Departments for the dropdown
+            ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
+            {
+                Value = d.DepartmentId.ToString(),
+                Text = d.Name
+            }).ToList();
+
             return View(facultyFromDb);
         }
 
@@ -63,6 +104,14 @@ namespace Web_prog_Project.Controllers
                 TempData["success"] = "Faculty member updated successfully";
                 return RedirectToAction("Index");
             }
+
+            // Populate Departments for the dropdown
+            ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
+            {
+                Value = d.DepartmentId.ToString(),
+                Text = d.Name
+            }).ToList();
+
             return View();
         }
 

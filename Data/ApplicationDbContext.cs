@@ -27,32 +27,12 @@ namespace Web_prog_Project.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Seed data for Assistants
-            modelBuilder.Entity<Assistant>().HasData(
-                new Assistant
-                {
-                    AssistantId = 1,
-                    Email = "kelvin@gmail.com",
-                    FirstName = "Kelvin",
-                    LastName = "Irutingabo",
-                    Phone = "+257 77492508",
-                    Specialization = "Kids"
-                },
-                new Assistant
-                {
-                    AssistantId = 2,
-                    Email = "kelvin2002@gmail.com",
-                    FirstName = "Joujou",
-                    LastName = "Ndayizeye",
-                    Phone = "+257 77730599",
-                    Specialization = "baby"
-                }
-            );
-
+          
             modelBuilder.Entity<FacultyMember>()
-                .HasOne(f => f.Department)
+                .HasOne<Department>()
                 .WithMany()
                 .HasForeignKey(f => f.DepartmentId);
         }
     }
 }
+    

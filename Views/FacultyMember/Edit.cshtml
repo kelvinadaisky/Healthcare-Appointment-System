@@ -1,4 +1,5 @@
-﻿@model FacultyMember
+﻿@using Web_prog_Project.Models.ViewModels;
+@model FacultyMemberWithDepartment
 
 <form method="post">
     <input asp-for="FacultyMemberId" type="hidden" />
@@ -33,9 +34,9 @@
         </div>
 
         <div class="mb-3 row p-1">
-            <label asp-for="DepartmentId" class="p-0">Department</label>
-            <select asp-for="DepartmentId" asp-items="ViewBag.DepartmentId" class="form-control"></select>
-            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            <label asp-for="DepartmentName" class="p-0">Department</label>
+            <select asp-for="DepartmentName" asp-items="ViewBag.DepartmentId" class="form-control"></select>
+            <span asp-validation-for="DepartmentName" class="text-danger"></span>
         </div>
 
         <div class="row">
