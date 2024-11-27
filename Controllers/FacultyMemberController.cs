@@ -109,7 +109,7 @@ namespace Web_prog_Project.Controllers
             if (ModelState.IsValid)
             {
                 var facultyMember = _db.FacultyMembers
-           .FirstOrDefault(f => f.FacultyMemberId == obj.FacultyMemberId);
+           .FirstOrDefault(f => f.FacultyMemberId == obj.FacultyMemberId); 
 
                 if (facultyMember != null)
                 {
