@@ -22,7 +22,7 @@
         </div>
 
         <!-- Department Dropdown -->
-        <div class="mb-3">
+        <div class="mb-3 row p-1">
             <label asp-for="DepartmentId" class="form-label">Department</label>
             <select asp-for="DepartmentId" asp-items="@(ViewData["Departments"] as List<SelectListItem>)" class="form-control">
                 <option value="">-- Select Department --</option>

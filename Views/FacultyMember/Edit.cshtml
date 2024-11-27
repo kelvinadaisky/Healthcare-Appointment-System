@@ -1,5 +1,5 @@
-﻿@using Web_prog_Project.Models.ViewModels;
-@model FacultyMemberWithDepartment
+﻿@model Web_prog_Project.Models.FacultyMember
+
 
 <form method="post">
     <input asp-for="FacultyMemberId" type="hidden" />
@@ -21,6 +21,14 @@
             <span asp-validation-for="LastName" class="text-danger"></span>
         </div>
 
+        <!-- Department Dropdown -->
+        <div class="mb-3 row p-1">
+            <label asp-for="DepartmentId" class="form-label">Department</label>
+            <select asp-for="DepartmentId" asp-items="@(ViewData["Departments"] as List<SelectListItem>)" class="form-control">
+                <option value="">-- Select Department --</option>
+            </select>
+            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+        </div>
         <div class="mb-3 row p-1">
             <label asp-for="Phone" class="p-0"></label>
             <input asp-for="Phone" class="form-control" />
@@ -31,12 +39,6 @@
             <label asp-for="Email" class="p-0"></label>
             <input asp-for="Email" class="form-control" />
             <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-
-        <div class="mb-3 row p-1">
-            <label asp-for="DepartmentName" class="p-0">Department</label>
-            <select asp-for="DepartmentName" asp-items="ViewBag.DepartmentId" class="form-control"></select>
-            <span asp-validation-for="DepartmentName" class="text-danger"></span>
         </div>
 
         <div class="row">

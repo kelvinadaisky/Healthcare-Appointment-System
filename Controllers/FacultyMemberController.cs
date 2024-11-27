@@ -59,7 +59,7 @@ namespace Web_prog_Project.Controllers
             {
                 _db.FacultyMembers.Add(obj);
                 await _db.SaveChangesAsync();
-                TempData["success"] = "Faculty member updated successfully";
+                TempData["success"] = "Faculty member created successfully";
                 return RedirectToAction("Index");
             }
 
@@ -75,15 +75,23 @@ namespace Web_prog_Project.Controllers
 
         public IActionResult Edit(int? id)
         {
+            // Fetch the faculty member by ID
+            var facultyMember = _db.FacultyMembers
+                .FirstOrDefault(f => f.FacultyMemberId == id);
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            FacultyMember? facultyFromDb = _db.FacultyMembers.Find(id);
-            if (facultyFromDb == null)
-            {
-                return NotFound();
-            }
+            // Get the list of departments to populate the dropdown
+            var departments = _db.Departments
+                .Select(d => new SelectListItem
+                {
+                    Value = d.DepartmentId.ToString(),
+                    Text = d.Name
+                }).ToList();
+
+
+
             // Populate Departments for the dropdown
             ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
             {
@@ -91,18 +99,31 @@ namespace Web_prog_Project.Controllers
                 Text = d.Name
             }).ToList();
 
-            return View(facultyFromDb);
+            return View(facultyMember);
         }
 
         [HttpPost]
         public IActionResult Edit(FacultyMember obj)
         {
+
             if (ModelState.IsValid)
             {
-                _db.FacultyMembers.Update(obj);
-                _db.SaveChanges();
-                TempData["success"] = "Faculty member updated successfully";
-                return RedirectToAction("Index");
+                var facultyMember = _db.FacultyMembers
+           .FirstOrDefault(f => f.FacultyMemberId == obj.FacultyMemberId);
+
+                if (facultyMember != null)
+                {
+                    facultyMember.FirstName = obj.FirstName;
+                    facultyMember.LastName = obj.LastName;
+                    facultyMember.Phone = obj.Phone;
+                    facultyMember.Email = obj.Email;
+                    facultyMember.DepartmentId = obj.DepartmentId; // Assuming DepartmentName is the DepartmentId as string
+
+                    _db.SaveChanges();
+
+                    return RedirectToAction("Index");
+                }
+
             }
 
             // Populate Departments for the dropdown
@@ -117,16 +138,30 @@ namespace Web_prog_Project.Controllers
 
         public IActionResult Delete(int? id)
         {
+            var facultyMember = _db.FacultyMembers
+                    .FirstOrDefault(f => f.FacultyMemberId == id);
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            FacultyMember? facultyFromDb = _db.FacultyMembers.Find(id);
-            if (facultyFromDb == null)
+            // Manually fetch the department name from the Department table
+            var departmentName = _db.Departments
+                .Where(d => d.DepartmentId == facultyMember.DepartmentId)
+                .Select(d => d.Name) // assuming the department has a Name property
+                .FirstOrDefault();
+
+            // Create the view model to pass to the view
+            var viewModel = new FacultyMemberWithDepartment
             {
-                return NotFound();
-            }
-            return View(facultyFromDb);
+                FacultyMemberId = facultyMember.FacultyMemberId,
+                FirstName = facultyMember.FirstName,
+                LastName = facultyMember.LastName,
+                DepartmentName = departmentName, // manually set the department name
+                Phone = facultyMember.Phone,
+                Email = facultyMember.Email
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost, ActionName("Delete")]
