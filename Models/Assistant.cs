@@ -14,7 +14,6 @@ namespace Web_prog_Project.Models
         [DisplayName("Last Name")]
         [MaxLength(30)]
         public string LastName { get; set; }
-        public string Specialization { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
     }
