@@ -145,7 +145,7 @@ namespace Web_prog_Project.Services
         {
             var patients = (from user in _db.Users
                             join userRoles in _db.UserRoles on user.Id equals userRoles.UserId
-                            join roles in _db.Roles.Where(x => x.Name == Helper.Patient) on userRoles.RoleId equals roles.Id
+                            join roles in _db.Roles.Where(x => x.Name == Helper.Assistant) on userRoles.RoleId equals roles.Id
                             select new AssistantVM
                             {
                                 Id = user.Id,
@@ -155,9 +155,6 @@ namespace Web_prog_Project.Services
 
             return patients;
         }
-
-
-
 
         public List<AppointmentVM> PatientsEventsById(string patientId)
         {
@@ -184,7 +181,7 @@ namespace Web_prog_Project.Services
 
             var patients = (from user in _db.Users
                             join userRoles in _db.UserRoles on user.Id equals userRoles.UserId
-                            join roles in _db.Roles.Where(x => x.Name == Helper.Patient) on userRoles.RoleId equals roles.Id
+                            join roles in _db.Roles.Where(x => x.Name == Helper.Assistant) on userRoles.RoleId equals roles.Id
                             where user.Id == patientId // Filtrer par patientId
                             select new AssistantVM
                             {

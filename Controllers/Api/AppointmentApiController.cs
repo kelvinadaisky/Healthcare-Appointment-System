@@ -61,7 +61,7 @@ namespace Web_prog_Project.Controllers.Api
             CommonResponse<List<AppointmentVM>> commonResponse = new CommonResponse<List<AppointmentVM>>();
             try
             {
-                if (role == Helper.Patient)
+                if (role == Helper.Assistant)
                 {
                     commonResponse.dataenum = _appointmentService.PatientsEventsById(loginUserId);
                     commonResponse.status = Helper.success_code;

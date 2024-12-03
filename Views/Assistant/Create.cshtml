@@ -49,3 +49,11 @@
         <partial name="_ValidationScriptsPartial" />
     }
 }
+
+<script>
+    $(document).ready(function() {
+        $("form").on("submit", function(event) {
+            console.log("Form submitted");
+        });
+    });
+</script>

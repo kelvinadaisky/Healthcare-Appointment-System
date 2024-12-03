@@ -25,7 +25,7 @@ namespace Web_prog_Project.Controllers
 
             ViewBag.Duration = Helper.GetTimeDropDown();
             ViewBag.DoctorList = _appointmentService.GetDoctorList();
-            if (User.IsInRole(Web_prog_Project.Utility.Helper.Patient))
+            if (User.IsInRole(Web_prog_Project.Utility.Helper.Assistant))
             {
                 // Get the logged-in patient's ID
                 var loggedInPatientId = _httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);

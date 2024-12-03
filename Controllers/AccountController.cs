@@ -33,13 +33,38 @@ namespace Web_prog_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user == null)
+                {
+                    ModelState.AddModelError("", "User not found");
+                    return View(model);
+                }
+                // Use the user object for sign-in
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
                 }
                 ModelState.AddModelError("", "Invalid login attempt");
+
+                if (!result.Succeeded)
+                {
+                    // Log the result
+                    if (result.IsNotAllowed)
+                    {
+                        ModelState.AddModelError("", "Login is not allowed for this user.");
+                    }
+                    else if (result.IsLockedOut)
+                    {
+                        ModelState.AddModelError("", "User is locked out.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "Invalid login attempt");
+                    }
+                }
             }
+
             return View(model);
         }
 
@@ -49,7 +74,7 @@ namespace Web_prog_Project.Controllers
             {
               await _roleManager.CreateAsync(new IdentityRole(Helper.Admin));
               await _roleManager.CreateAsync(new IdentityRole(Helper.Doctor));
-              await _roleManager.CreateAsync(new IdentityRole(Helper.Patient));
+              await _roleManager.CreateAsync(new IdentityRole(Helper.Assistant));
             }
             return View();
         }
@@ -64,7 +89,7 @@ namespace Web_prog_Project.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    Name = model.Name
+                    Name = model.Name 
                 };
 
                 var result = await _userManager.CreateAsync(user, model.Password);

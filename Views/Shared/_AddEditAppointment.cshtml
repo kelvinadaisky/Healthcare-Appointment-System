@@ -44,7 +44,7 @@
                                 <label class="form-control" disabled id="lblStatus" />
                             </div>
                         }
-                        @if (User.IsInRole(Web_prog_Project.Utility.Helper.Patient))
+                        @if (User.IsInRole(Web_prog_Project.Utility.Helper.Assistant))
                         {
                             <div class="form-group">
                                 <label for="lblDoctorName">Doctor Name</label>
@@ -87,7 +87,7 @@
  *@                        <button type="button" id="btnDelete" class="btn btn-danger" onclick="onDeleteAppointment();">Delete</button>
                     }
 
-                    @if (User.IsInRole(Web_prog_Project.Utility.Helper.Patient))
+                    @if (User.IsInRole(Web_prog_Project.Utility.Helper.Assistant))
                     {
                         <button type="button" id="btnConfirm" class="btn btn-success" onclick="onConfirm();">Book</button>
                         <button type="button" id="btnDelete" class="btn btn-danger" onclick="onDeleteBookedAppointment();">Delete</button>

@@ -9,7 +9,7 @@ namespace Web_prog_Project.Utility
     public static class Helper
     {
         public const string Admin = "Admin";
-        public const string Patient = "Patient";
+        public const string Assistant = "Patient";
         public const string Doctor = "Doctor";
         public const string appointmentAdded = "Appointment added successfully.";
         public const string appointmentUpdated = "Appointment updated successfully.";
@@ -37,7 +37,7 @@ namespace Web_prog_Project.Utility
             {
                 return new List<SelectListItem>
                 {
-                    new SelectListItem{Value=Helper.Patient,Text=Helper.Patient},
+                    new SelectListItem{Value=Helper.Assistant,Text=Helper.Assistant},
                     new SelectListItem{Value=Helper.Doctor,Text=Helper.Doctor}
                 };
             }
