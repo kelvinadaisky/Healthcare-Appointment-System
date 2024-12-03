@@ -26,7 +26,9 @@
                     {
                         <div class="form-group">
                             <label for="title">Select Patient</label>
-                            <select id="patientId" asp-items="@(new SelectList(ViewBag.PatientList, "Id", "Name"))" class="form-control"></select>
+                            <select id="patientId" asp-items="@(new SelectList(ViewBag.PatientList, "Id", "Name"))" class="form-control">
+                                <option value="null">-- Select a Patient --</option>
+                            </select>
                         </div>
                     }
                     else
@@ -47,6 +49,11 @@
                             <div class="form-group">
                                 <label for="lblDoctorName">Doctor Name</label>
                                 <label class="form-control" disabled id="lblDoctorName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Select Patient</label>
+                                <select id="patientId" asp-items="@(new SelectList(ViewBag.PatientInfo, "Id", "Name"))" class="form-control">
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="lblStatus">Status</label>
@@ -76,10 +83,15 @@
 
                     @if (User.IsInRole(Web_prog_Project.Utility.Helper.Doctor))
                     {
-                        <button type="button" id="btnConfirm" class="btn btn-success" onclick="onConfirm();">Confirm</button>
-                        <button type="button" id="btnDelete" class="btn btn-danger" onclick="onDeleteAppointment();">Delete</button>
+@*                         <button type="button" id="btnConfirm" class="btn btn-success" onclick="onConfirm();">Book</button>
+ *@                        <button type="button" id="btnDelete" class="btn btn-danger" onclick="onDeleteAppointment();">Delete</button>
                     }
 
+                    @if (User.IsInRole(Web_prog_Project.Utility.Helper.Patient))
+                    {
+                        <button type="button" id="btnConfirm" class="btn btn-success" onclick="onConfirm();">Book</button>
+                        <button type="button" id="btnDelete" class="btn btn-danger" onclick="onDeleteBookedAppointment();">Delete</button>
+                    }
 
 
                 </div>

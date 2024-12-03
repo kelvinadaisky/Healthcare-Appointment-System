@@ -58,16 +58,18 @@ namespace Web_prog_Project.Services
 
         }
 
-        public async Task<int> ConfirmEvent(int id)
+        public async Task<int> ConfirmEvent(int id, string patientId)
         {
             var appointment = _db.Appointments.FirstOrDefault(x => x.Id == id);
             if (appointment != null)
             {
                 appointment.IsDoctorApproved = true;
+                appointment.PatientId = patientId; // Update the PatientId if necessary
                 return await _db.SaveChangesAsync();
             }
             return 0;
         }
+
 
         public async Task<int> Delete(int id)
         {
@@ -75,6 +77,18 @@ namespace Web_prog_Project.Services
             if (appointment != null)
             {
                 _db.Appointments.Remove(appointment);
+                return await _db.SaveChangesAsync();
+            }
+            return 0;
+        }
+
+        public async Task<int> DeleteBookedAppointment(int id)
+        {
+            var appointment = _db.Appointments.FirstOrDefault(x => x.Id == id);
+            if (appointment != null)
+            {
+                appointment.IsDoctorApproved = false;
+                appointment.PatientId = null; // Update the PatientId if necessary
                 return await _db.SaveChangesAsync();
             }
             return 0;
@@ -127,12 +141,12 @@ namespace Web_prog_Project.Services
             return doctors;
         }
 
-        public List<PatientVM> GetPatientList()
+        public List<AssistantVM> GetPatientList()
         {
             var patients = (from user in _db.Users
                             join userRoles in _db.UserRoles on user.Id equals userRoles.UserId
                             join roles in _db.Roles.Where(x => x.Name == Helper.Patient) on userRoles.RoleId equals roles.Id
-                            select new PatientVM
+                            select new AssistantVM
                             {
                                 Id = user.Id,
                                 Name = user.Name
@@ -142,9 +156,12 @@ namespace Web_prog_Project.Services
             return patients;
         }
 
+
+
+
         public List<AppointmentVM> PatientsEventsById(string patientId)
         {
-            return _db.Appointments.Where(x => x.PatientId == patientId).ToList().Select(c => new AppointmentVM()
+            return _db.Appointments.Where(x => x.PatientId == patientId || x.PatientId == null).ToList().Select(c => new AppointmentVM()
             {
                 Id = c.Id,
                 Description = c.Description,
@@ -152,8 +169,31 @@ namespace Web_prog_Project.Services
                 EndDate = c.EndDate.ToString("yyyy-MM-dd HH:mm:ss"),
                 Title = c.Title,
                 Duration = c.Duration,
-                IsDoctorApproved = c.IsDoctorApproved
+                IsDoctorApproved = c.IsDoctorApproved,
+                PatientId = c.PatientId
             }).ToList();
+        }
+
+        public List<AssistantVM> GetPatientInfo(string patientId)
+        {
+            // Vérifiez si le patientId est null ou vide
+            if (string.IsNullOrEmpty(patientId))
+            {
+                return new List<AssistantVM>(); // Retourne une liste vide si l'ID n'est pas valide
+            }
+
+            var patients = (from user in _db.Users
+                            join userRoles in _db.UserRoles on user.Id equals userRoles.UserId
+                            join roles in _db.Roles.Where(x => x.Name == Helper.Patient) on userRoles.RoleId equals roles.Id
+                            where user.Id == patientId // Filtrer par patientId
+                            select new AssistantVM
+                            {
+                                Id = user.Id,
+                                Name = user.Name
+                            }
+                           ).ToList();
+
+            return patients;
         }
     }
 }

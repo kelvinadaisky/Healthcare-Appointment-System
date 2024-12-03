@@ -217,25 +217,57 @@ function onDeleteAppointment() {
 }
 
 function onConfirm() {
-    var id = parseInt($("#id").val());
+    if (checkValidation()) {
+        var id = parseInt($("#id").val());
+        var patientId = $("#patientId").val(); // Get the PatientId from the form
+
+        // Construct the URL with both id and patientId
+        var url = routeURL + '/api/Appointment/ConfirmEvent/' + id + '/' + encodeURIComponent(patientId);
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: 'JSON',
+            success: function (response) {
+                if (response.status === 1) {
+                    $.notify(response.message, "success");
+                    calendar.refetchEvents();
+                    onCloseModal();
+                } else {
+                    $.notify(response.message, "error");
+                }
+            },
+            error: function (xhr) {
+                $.notify("Error", "error");
+            }
+        });
+    }
+}
+
+function onDeleteBookedAppointment() {
+    var id = parseInt($("#id").val()); // Get the appointment ID
+
+    if (isNaN(id) || id <= 0) {
+        $.notify("Invalid appointment ID", "error");
+        return;
+    }
+
+    // Proceed directly with the deletion
     $.ajax({
-        url: routeURL + '/api/Appointment/ConfirmEvent/' + id,
-        type: 'GET',
+        url: routeURL + '/api/Appointment/DeleteBookedAppointment/' + id,
+        type: 'GET', // Assuming you want to use GET; consider using DELETE for RESTful design
         dataType: 'JSON',
         success: function (response) {
-
             if (response.status === 1) {
                 $.notify(response.message, "success");
-                calendar.refetchEvents();
-                onCloseModal();
-            }
-            else {
-
+                calendar.refetchEvents(); // Refresh calendar events
+                onCloseModal(); // Close the modal and reset the form
+            } else {
                 $.notify(response.message, "error");
             }
         },
         error: function (xhr) {
-            $.notify("Error", "error");
+            $.notify("Error deleting Booked appointment", "error");
         }
     });
 }
