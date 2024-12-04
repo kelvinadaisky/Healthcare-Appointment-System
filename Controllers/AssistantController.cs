@@ -9,7 +9,6 @@ namespace Web_prog_Project.Controllers
     {
         private readonly ApplicationDbContext _db;
         private readonly UserManager<ApplicationUser> _userManager;
-        SignInManager<ApplicationUser> _signInManager;
 
         public AssistantController(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
         { 

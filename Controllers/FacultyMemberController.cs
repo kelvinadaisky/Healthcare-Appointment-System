@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Web_prog_Project.Data;
 using Web_prog_Project.Models.ViewModels;
 using Web_prog_Project.Models;
+using Microsoft.AspNetCore.Identity;
 
 
 namespace Web_prog_Project.Controllers
@@ -11,10 +12,13 @@ namespace Web_prog_Project.Controllers
     public class FacultyMemberController : Controller
     {
         private readonly ApplicationDbContext _db;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public FacultyMemberController(ApplicationDbContext db)
+
+        public FacultyMemberController(ApplicationDbContext db,UserManager<ApplicationUser> userManager)
         {
             _db = db;
+            _userManager = userManager;
         }
 
         public async Task<IActionResult> Index()
@@ -57,10 +61,26 @@ namespace Web_prog_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.FacultyMembers.Add(obj);
-                await _db.SaveChangesAsync();
-                TempData["success"] = "Faculty member created successfully";
-                return RedirectToAction("Index");
+                // Extract the part before the "@" from the email
+                string password = obj.Email.Substring(0, obj.Email.IndexOf('@'));
+                // Create the ApplicationUser
+                var user = new ApplicationUser
+                {
+                    UserName = obj.FirstName, // Assuming Email is unique
+                    Email = obj.Email,
+                    Name = $"{obj.FirstName} {obj.LastName}" // Assuming you have a Name property
+                };
+                // Create the user with the generated password
+                var result = await _userManager.CreateAsync(user, password);
+                if (result.Succeeded)
+                {
+                    _db.FacultyMembers.Add(obj);
+                    await _db.SaveChangesAsync();
+                    await _userManager.AddToRoleAsync(user, "Doctor");
+                    TempData["success"] = "Faculty member created successfully";
+                    return RedirectToAction("Index");
+                }
+                   
             }
 
             // Repopulate Departments if model validation fails
