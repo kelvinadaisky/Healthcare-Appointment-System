@@ -139,9 +139,23 @@ namespace Web_prog_Project.Controllers
                     facultyMember.Email = obj.Email;
                     facultyMember.DepartmentId = obj.DepartmentId; // Assuming DepartmentName is the DepartmentId as string
 
-                    _db.SaveChanges();
+                    // Find the corresponding user in the UserManager by email
+                    var user = _userManager.FindByEmailAsync(obj.Email).Result;
+                    if (user != null)
+                    {
+                        // Update user details (email, name, etc.)
+                        user.Name = $"{obj.FirstName} {obj.LastName}";
+                        user.UserName = $"{obj.FirstName}";
+                        var updateResult = _userManager.UpdateAsync(user).Result;
 
-                    return RedirectToAction("Index");
+                        if (updateResult.Succeeded)
+                        {
+                            _db.SaveChanges();
+                            TempData["success"] = "Faculty Member updated successfully";
+                            return RedirectToAction("Index");
+                        }
+                    }
+                            
                 }
 
             }
@@ -192,10 +206,30 @@ namespace Web_prog_Project.Controllers
             {
                 return NotFound();
             }
-            _db.FacultyMembers.Remove(obj);
-            _db.SaveChanges();
-            TempData["success"] = "Faculty member deleted successfully";
+            // Find the associated user
+            var user = _userManager.FindByEmailAsync(obj.Email).Result;
+            if (user != null)
+            {
+                // Remove the user from the role
+                _userManager.RemoveFromRoleAsync(user, "Faculty Member").Wait();
+
+                // Delete the user from UserManager
+                var result = _userManager.DeleteAsync(user).Result;
+                if (result.Succeeded)
+                {
+                    // Remove assistant from the database
+                    _db.FacultyMembers.Remove(obj);
+                    _db.SaveChanges();
+
+                    TempData["success"] = "Faculty Member and associated user deleted successfully";
+                    return RedirectToAction("Index");
+                }
+
+            }
+
+            TempData["error"] = "User not found.";
             return RedirectToAction("Index");
+
         }
     }
 }
