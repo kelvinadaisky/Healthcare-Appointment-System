@@ -20,6 +20,7 @@ namespace Web_prog_Project.Data
         public DbSet<Assistant> Assistants { get; set; }
         public DbSet<FacultyMember> FacultyMembers { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<AssistantShift> AssistantShifts { get; set; }  // Added Shift DbSet
 
 
 
@@ -32,6 +33,19 @@ namespace Web_prog_Project.Data
                 .HasOne<Department>()
                 .WithMany()
                 .HasForeignKey(f => f.DepartmentId);
+
+            // Configure Shift and Assistant relationship
+            modelBuilder.Entity<AssistantShift>()
+                .HasOne(s => s.Assistant) // Use the navigation property
+                .WithMany(a => a.AssistantShifts) // Assuming you have a collection in Assistant
+                .HasForeignKey(s => s.AssistantId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Configure Shift -> Department relationship
+            modelBuilder.Entity<AssistantShift>()
+                .HasOne(s => s.Department) // Use the navigation property
+                .WithMany(d => d.AssistantShifts) // Assuming you have a collection in Department
+                .HasForeignKey(s => s.DepartmentId);
         }
     }
 }

@@ -1,0 +1,29 @@
+﻿@model Web_prog_Project.Models.AssistantShift
+
+<h2>Create Shift</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="StartTime"></label>
+        <input asp-for="StartTime" class="form-control" type="datetime-local" />
+    </div>
+    <div class="form-group">
+        <label asp-for="EndTime"></label>
+        <input asp-for="EndTime" class="form-control" type="datetime-local" />
+    </div>
+    <div class="form-group">
+        <label asp-for="AssistantId" class="form-label">Assistant</label>
+        <select asp-for="AssistantId" asp-items="@(ViewData["Assistants"] as List<SelectListItem>)" class="form-control">
+            <option value="">-- Select Assistant --</option>
+        </select>
+        <span asp-validation-for="AssistantId" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="DepartmentId" class="form-label">Department</label>
+        <select asp-for="DepartmentId" asp-items="@(ViewData["Departments"] as List<SelectListItem>)" class="form-control">
+            <option value="">-- Select Department --</option>
+        </select>
+        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>

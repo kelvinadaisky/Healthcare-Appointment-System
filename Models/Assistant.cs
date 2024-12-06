@@ -16,5 +16,8 @@ namespace Web_prog_Project.Models
         public string LastName { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
+        public ICollection<AssistantShift> AssistantShifts { get; set; } = new List<AssistantShift>();
+
+
     }
 }

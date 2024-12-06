@@ -15,6 +15,8 @@ namespace Web_prog_Project.Models
         [Range(0, int.MaxValue, ErrorMessage = "Number of patients must be a positive number.")]
         public int NumberOfPatients { get; set; }
 
+        public ICollection<AssistantShift> AssistantShifts { get; set; } = new List<AssistantShift>();
+
     }
 
 }

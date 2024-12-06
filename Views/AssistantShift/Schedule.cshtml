@@ -1,0 +1,39 @@
+﻿<div class="row">
+    <div class="container">
+        @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
+        {
+            <div class="row">
+                <div class="col-4">
+                    <h2>Shift</h2>
+                </div>
+                <div class="col-3 offset-5">
+                    <a asp-controller="AssistantShift" asp-action="Create" class="btn-secondary form-control">Add Shift</a>
+                </div>
+            </div>
+        }
+        <div id="calendar"></div>
+    </div>
+</div>
+
+
+
+@* <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: [
+                {
+                    title: 'Asistan Nöbeti: Ahmet Yılmaz',
+                    start: '2024-10-20'
+                },
+                {
+                    title: 'Asistan Nöbeti: Ayşe Kara',
+                    start: '2024-10-21'
+                }
+                // Add more events dynamically later
+            ]
+        });
+        calendar.render();
+    });
+</script> *@
