@@ -77,10 +77,29 @@ namespace Web_prog_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                _db.Assistants.Update(obj);
-                _db.SaveChanges();
-                TempData["success"] = "Assistant updated successfully";
-                return RedirectToAction("Index");
+
+                // Find the corresponding user in the UserManager by email
+                var user = _userManager.FindByEmailAsync(obj.Email).Result;
+                if (user != null)
+                {
+                    // Update user details (email, name, etc.)
+                    user.Name = $"{obj.FirstName} {obj.LastName}";
+                    user.UserName = $"{obj.FirstName}";
+                    var updateResult = _userManager.UpdateAsync(user).Result;
+
+                    if (updateResult.Succeeded)
+                    {
+                        // Update assistant details in the database
+                        _db.Assistants.Update(obj);
+                        _db.SaveChanges();
+
+                        TempData["success"] = "Assistant updated successfully";
+                        return RedirectToAction("Index");
+                    }
+
+                }
+
+            
             }
             return View();
 
@@ -106,9 +125,30 @@ namespace Web_prog_Project.Controllers
             {
                 return NotFound();
             }
-            _db.Assistants.Remove(obj);
-            _db.SaveChanges();
-            TempData["success"] = "Assistant deleted successfully";
+
+
+            // Find the associated user
+            var user = _userManager.FindByEmailAsync(obj.Email).Result;
+            if (user != null)
+            {
+                // Remove the user from the role
+                _userManager.RemoveFromRoleAsync(user, "Assistant").Wait();
+
+                // Delete the user from UserManager
+                var result = _userManager.DeleteAsync(user).Result;
+                if (result.Succeeded)
+                {
+                    // Remove assistant from the database
+                    _db.Assistants.Remove(obj);
+                    _db.SaveChanges();
+
+                    TempData["success"] = "Assistant and associated user deleted successfully";
+                    return RedirectToAction("Index");
+                }
+
+            }
+
+            TempData["error"] = "User not found.";
             return RedirectToAction("Index");
 
         }

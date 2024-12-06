@@ -23,11 +23,9 @@
             <input asp-for="Phone" class="form-control" />
             <span asp-validation-for="Phone" class="text-danger"></span>
         </div>
-        <div class="mb-3 row p-1">
-            <label asp-for="Email" class="p-0"> </label>
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
+        
+            <input type="hidden" asp-for="Email" class="form-control" value="@Model.Email" />
+       
 
         <div class="row">
             <div class="col-6 col-md-3">
