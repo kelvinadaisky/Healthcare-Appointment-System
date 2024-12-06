@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Web_prog_Project.Data;
 using Web_prog_Project.Models;
 using Web_prog_Project.Services;
+using Web_prog_Project.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,10 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 
 // Register your custom service
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+
+// Register the EmailSender service
+builder.Services.Configure<MailjetOptions>(builder.Configuration.GetSection("Mailjet")); // Bind Mailjet options
+builder.Services.AddScoped<IEmailSender, EmailSender>(); // Register EmailSender
 
 // Add session services
 builder.Services.AddDistributedMemoryCache(); // Required for session storage

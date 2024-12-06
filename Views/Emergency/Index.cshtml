@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Web_prog_Project.Models.EmergencyAnnouncement>
+
+
+<h2>Emergency Announcements</h2>
+
+<!-- Button to create a new emergency announcement -->
+<a href="@Url.Action("Create", "Emergency")" class="btn btn-primary mb-3">Create New Announcement</a>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var announcement in Model)
+        {
+            <tr>
+                <td>@announcement.Title</td>
+                <td>@announcement.Content</td>
+                <td>@announcement.CreatedAt.ToString("g")</td>
+            </tr>
+        }
+    </tbody>
+</table>

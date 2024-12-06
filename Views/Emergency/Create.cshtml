@@ -1,0 +1,15 @@
+﻿@model Web_prog_Project.Models.EmergencyAnnouncement
+
+<h1>Create Emergency Announcement</h1>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label for="Title">Title</label>
+        <input type="text" id="Title" name="Title" required />
+    </div>
+    <div>
+        <label for="Content">Content</label>
+        <textarea id="Content" name="Content" required></textarea>
+    </div>
+    <button type="submit">Create</button>
+</form>
