@@ -11,29 +11,19 @@
                 </div>
             </div>
         }
-        <div id="calendar"></div>
+        <div id="shiftCalendar"></div>
     </div>
 </div>
 
+<script>
+        console.log(@Html.Raw(Json.Serialize(ViewData["Shifts"])));
 
-
-@* <script>
     document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('calendar');
+        var calendarEl = document.getElementById('shiftCalendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
-            events: [
-                {
-                    title: 'Asistan Nöbeti: Ahmet Yılmaz',
-                    start: '2024-10-20'
-                },
-                {
-                    title: 'Asistan Nöbeti: Ayşe Kara',
-                    start: '2024-10-21'
-                }
-                // Add more events dynamically later
-            ]
+            events: @Html.Raw(Json.Serialize(ViewData["Shifts"]))  // Serialize the events from ViewData to JavaScript
         });
         calendar.render();
     });
-</script> *@
+</script>
