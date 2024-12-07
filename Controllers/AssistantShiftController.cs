@@ -175,12 +175,16 @@ namespace Web_prog_Project.Controllers
             {
                 return NotFound();
             }
-            AssistantShift? assistantFromDb = _db.AssistantShifts.Find(id);
-            if (assistantFromDb == null)
+            AssistantShift? assistantShiftFromDb = _db.AssistantShifts
+                .Include(s => s.Assistant) // Include the Assistant entity
+                .Include(s => s.Department) // Include the Department entity
+                .FirstOrDefault(s => s.Id == id);
+
+            if (assistantShiftFromDb == null)
             {
                 return NotFound();
             }
-            return View(assistantFromDb);
+            return View(assistantShiftFromDb);
         }
         [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)

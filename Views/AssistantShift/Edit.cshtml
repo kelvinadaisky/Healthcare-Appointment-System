@@ -4,7 +4,6 @@
     <h2 class="text-primary mb-4">Edit Shift</h2>
 
     <form method="post" asp-action="Edit" class="p-4 shadow-sm rounded bg-light">
-        <input asp-for="AssistantId" hidden />
         <input asp-for="Id" hidden />
 
         <div class="border p-3">
@@ -66,9 +65,3 @@
         <partial name="_ValidationScriptsPartial" />
     }
 }
-
-<style>
-    .form-label.fw-bold {
-        font-weight: 600;
-    }
-</style>
