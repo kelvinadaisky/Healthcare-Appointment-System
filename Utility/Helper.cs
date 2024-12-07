@@ -56,5 +56,20 @@ namespace Web_prog_Project.Utility
             }
             return duration;
         }
+
+  
+        public static string GetDepartmentColor(int departmentId)
+        {
+            return departmentId switch
+            {
+                4 => "#FF5733", // Color for Department 1
+                6 => "#33FF57", // Color for Department 2
+                7 => "#3357FF", // Color for Department 3
+                                // Add more departments as needed
+                _ => "#000000" // Default color for undefined departments
+            };
+        }
+        
+
     }
 }

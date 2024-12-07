@@ -3,14 +3,28 @@
 <h2>Create Shift</h2>
 
 <form asp-action="Create" method="post">
+    <!-- Shift Date -->
+    <div class="form-group">
+        <label asp-for="ShiftDate"></label>
+        <input asp-for="ShiftDate" class="form-control" type="date" />
+        <span asp-validation-for="ShiftDate" class="text-danger"></span>
+    </div>
+
+    <!-- Start Time -->
     <div class="form-group">
         <label asp-for="StartTime"></label>
-        <input asp-for="StartTime" class="form-control" type="datetime-local" />
+        <input asp-for="StartTime" class="form-control" type="time" />
+        <span asp-validation-for="StartTime" class="text-danger"></span>
     </div>
+
+    <!-- End Time -->
     <div class="form-group">
         <label asp-for="EndTime"></label>
-        <input asp-for="EndTime" class="form-control" type="datetime-local" />
+        <input asp-for="EndTime" class="form-control" type="time" />
+        <span asp-validation-for="EndTime" class="text-danger"></span>
     </div>
+
+    <!-- Assistant -->
     <div class="form-group">
         <label asp-for="AssistantId" class="form-label">Assistant</label>
         <select asp-for="AssistantId" asp-items="@(ViewData["Assistants"] as List<SelectListItem>)" class="form-control">
@@ -18,6 +32,8 @@
         </select>
         <span asp-validation-for="AssistantId" class="text-danger"></span>
     </div>
+
+    <!-- Department -->
     <div class="form-group">
         <label asp-for="DepartmentId" class="form-label">Department</label>
         <select asp-for="DepartmentId" asp-items="@(ViewData["Departments"] as List<SelectListItem>)" class="form-control">
@@ -25,5 +41,6 @@
         </select>
         <span asp-validation-for="DepartmentId" class="text-danger"></span>
     </div>
+
     <button type="submit" class="btn btn-primary">Create</button>
 </form>

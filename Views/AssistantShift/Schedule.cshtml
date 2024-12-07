@@ -1,4 +1,6 @@
-﻿<div class="container mt-4">
+﻿@using Web_prog_Project.Utility
+
+<div class="container mt-4">
     @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
     {
         <div class="row align-items-center mb-3">
@@ -22,6 +24,20 @@
         </div>
         <div class="card-body">
             <div id="shiftCalendar" class="border rounded" style="padding: 10px;"></div>
+        </div>
+    </div>
+
+    <!-- Color Legend Section -->
+    <div class="mt-4">
+        <h5>Color Legend</h5>
+        <div class="d-flex flex-wrap">
+            @foreach (var department in ViewData["Departments"] as List<Department>)
+            {
+                <div class="me-3">
+                    <div style="width: 20px; height: 20px; background-color: @Helper.GetDepartmentColor(department.DepartmentId); border: 1px solid #162466;"></div>
+                    <span>@department.Name</span>
+                </div>
+            }
         </div>
     </div>
 </div>
@@ -61,7 +77,21 @@
             events: @Html.Raw(Json.Serialize(ViewData["Shifts"])), // Serialize the events from ViewData to JavaScript
             themeSystem: 'bootstrap',
             editable: true,
-            droppable: true
+            droppable: true,
+            eventContent: function(arg) {
+                let titleEl = document.createElement('div');
+                titleEl.className = 'fc-event-title';
+                // Format the text as needed (e.g., title and additional details)
+                titleEl.innerHTML = `
+                    <strong>${arg.event.title}</strong><br>`;
+                return { domNodes: [titleEl] };
+            },
+            eventDidMount: function(info) {
+                // Apply the background color to the event
+                info.el.style.backgroundColor = info.event.extendedProps.backgroundColor || "#ffffff"; // Default to white if not set
+                info.el.style.borderColor = info.event.extendedProps.borderColor || "#162466"; // Default border color
+                info.el.style.color = info.event.extendedProps.textColor || "black"; // Default text color
+            }
         });
         calendar.render();
     });
