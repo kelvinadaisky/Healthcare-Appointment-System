@@ -1,15 +1,52 @@
 ﻿@model Web_prog_Project.Models.EmergencyAnnouncement
 
-<h1>Create Emergency Announcement</h1>
+<div class="container mt-4">
+    <h1 class="text-danger mb-4">Create Emergency Announcement</h1>
 
-<form asp-action="Create" method="post">
-    <div>
-        <label for="Title">Title</label>
-        <input type="text" id="Title" name="Title" required />
-    </div>
-    <div>
-        <label for="Content">Content</label>
-        <textarea id="Content" name="Content" required></textarea>
-    </div>
-    <button type="submit">Create</button>
-</form>
+    <form asp-action="Create" method="post" class="p-4 shadow-sm rounded bg-light">
+        <!-- Title -->
+        <div class="mb-3">
+            <label for="Title" class="form-label fw-bold">Title</label>
+            <input type="text" id="Title" name="Title" class="form-control" placeholder="Enter a concise title" required />
+            <small class="form-text text-muted">Provide a clear and descriptive title for the announcement.</small>
+        </div>
+
+        <!-- Content -->
+        <div class="mb-3">
+            <label for="Content" class="form-label fw-bold">Content</label>
+            <textarea id="Content" name="Content" class="form-control" rows="5" placeholder="Write the details of the announcement" required></textarea>
+            <small class="form-text text-muted">Include all necessary information for the announcement.</small>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="d-grid">
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-megaphone"></i> Create Announcement
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    .form-text {
+        font-size: 0.875em;
+    }
+
+    .form-label.fw-bold {
+        font-weight: 600;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-danger:hover {
+            background-color: #b02a37;
+            border-color: #b02a37;
+        }
+
+    .container h1.text-danger {
+        font-size: 2rem;
+    }
+</style>

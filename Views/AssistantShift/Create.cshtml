@@ -1,46 +1,77 @@
 ﻿@model Web_prog_Project.Models.AssistantShift
 
-<h2>Create Shift</h2>
+<div class="container mt-4">
+    <h2 class="text-primary mb-4">Create Shift</h2>
 
-<form asp-action="Create" method="post">
-    <!-- Shift Date -->
-    <div class="form-group">
-        <label asp-for="ShiftDate"></label>
-        <input asp-for="ShiftDate" class="form-control" type="date" />
-        <span asp-validation-for="ShiftDate" class="text-danger"></span>
-    </div>
+    <form asp-action="Create" method="post" class="p-4 shadow-sm rounded bg-light">
+        <!-- Shift Date -->
+        <div class="mb-3">
+            <label asp-for="ShiftDate" class="form-label fw-bold">Shift Date</label>
+            <input asp-for="ShiftDate" class="form-control" type="date" />
+            <small class="form-text text-muted">Select the date for this shift.</small>
+            <span asp-validation-for="ShiftDate" class="text-danger"></span>
+        </div>
 
-    <!-- Start Time -->
-    <div class="form-group">
-        <label asp-for="StartTime"></label>
-        <input asp-for="StartTime" class="form-control" type="time" />
-        <span asp-validation-for="StartTime" class="text-danger"></span>
-    </div>
+        <!-- Start Time -->
+        <div class="mb-3">
+            <label asp-for="StartTime" class="form-label fw-bold">Start Time</label>
+            <input asp-for="StartTime" class="form-control" type="time" />
+            <small class="form-text text-muted">Specify the start time of the shift.</small>
+            <span asp-validation-for="StartTime" class="text-danger"></span>
+        </div>
 
-    <!-- End Time -->
-    <div class="form-group">
-        <label asp-for="EndTime"></label>
-        <input asp-for="EndTime" class="form-control" type="time" />
-        <span asp-validation-for="EndTime" class="text-danger"></span>
-    </div>
+        <!-- End Time -->
+        <div class="mb-3">
+            <label asp-for="EndTime" class="form-label fw-bold">End Time</label>
+            <input asp-for="EndTime" class="form-control" type="time" />
+            <small class="form-text text-muted">Specify the end time of the shift.</small>
+            <span asp-validation-for="EndTime" class="text-danger"></span>
+        </div>
 
-    <!-- Assistant -->
-    <div class="form-group">
-        <label asp-for="AssistantId" class="form-label">Assistant</label>
-        <select asp-for="AssistantId" asp-items="@(ViewData["Assistants"] as List<SelectListItem>)" class="form-control">
-            <option value="">-- Select Assistant --</option>
-        </select>
-        <span asp-validation-for="AssistantId" class="text-danger"></span>
-    </div>
+        <!-- Assistant -->
+        <div class="mb-3">
+            <label asp-for="AssistantId" class="form-label fw-bold">Assistant</label>
+            <select asp-for="AssistantId" asp-items="@(ViewData["Assistants"] as List<SelectListItem>)" class="form-control">
+                <option value="">-- Select Assistant --</option>
+            </select>
+            <small class="form-text text-muted">Choose the assistant for this shift.</small>
+            <span asp-validation-for="AssistantId" class="text-danger"></span>
+        </div>
 
-    <!-- Department -->
-    <div class="form-group">
-        <label asp-for="DepartmentId" class="form-label">Department</label>
-        <select asp-for="DepartmentId" asp-items="@(ViewData["Departments"] as List<SelectListItem>)" class="form-control">
-            <option value="">-- Select Department --</option>
-        </select>
-        <span asp-validation-for="DepartmentId" class="text-danger"></span>
-    </div>
+        <!-- Department -->
+        <div class="mb-3">
+            <label asp-for="DepartmentId" class="form-label fw-bold">Department</label>
+            <select asp-for="DepartmentId" asp-items="@(ViewData["Departments"] as List<SelectListItem>)" class="form-control">
+                <option value="">-- Select Department --</option>
+            </select>
+            <small class="form-text text-muted">Assign this shift to a department.</small>
+            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Create</button>
-</form>
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle"></i> Create Shift
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+    .form-text {
+        font-size: 0.875em;
+    }
+
+    .form-label.fw-bold {
+        font-weight: 600;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+</style>
