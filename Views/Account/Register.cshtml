@@ -1,66 +1,78 @@
 ﻿@model RegisterViewModel
 
-<h2>Sign Up</h2>
-<form method="post" asp-action="Register" asp-controller="Account">
-    @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
-    {
-        <h4>Register an admin account.</h4>
-    }
-    else
-    {
-        <h4>Create a new account.</h4>
-    }
-    <hr />
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div class="form-group row">
-        <label class="col-md-2" asp-for="Name"></label>
-        <div class=" col-md-10">
-            <input asp-for="Name" class="form-control" />
-            <span asp-validation-for="Name" class="text-danger"></span>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header text-center bg-primary text-white">
+                    @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
+                    {
+                        <h2>Register an admin account</h2>
+                    }
+                    else
+                    {
+                        <h2>Create a new account</h2>
+                    }
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-action="Register" asp-controller="Account">
+                        
+                        <!-- Name Field -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Name" class="form-label"></label>
+                            <input asp-for="Name" class="form-control" placeholder="Enter your name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Email Field -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Email" class="form-label"></label>
+                            <input asp-for="Email" class="form-control" placeholder="Enter your email" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div class="form-group mb-3">
+                            <label asp-for="Password" class="form-label"></label>
+                            <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <!-- Confirm Password Field -->
+                        <div class="form-group mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label"></label>
+                            <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm your password" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <!-- Role Name Dropdown -->
+                        <div class="form-group mb-3">
+                            <label asp-for="RoleName" class="form-label"></label>
+                            <select asp-for="RoleName"
+                                    asp-items="@Web_prog_Project.Utility.Helper.GetRolesForDropDown(User.IsInRole(Web_prog_Project.Utility.Helper.Admin))"
+                                    class="form-control">
+                            </select>
+                            <span asp-validation-for="RoleName" class="text-danger"></span>
+                        </div>
+
+                        <!-- Register Button -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success btn-block">Register</button>
+                        </div>
+
+                        <!-- Links -->
+                        <div class="text-center mt-3">
+                            <p>
+                                Already have an account? <a asp-action="Login" class="text-decoration-none">Sign In</a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="form-group row">
-        <label class="col-md-2" asp-for="Email"></label>
-        <div class=" col-md-10">
-            <input asp-for="Email" class="form-control" />
-            <span asp-validation-for="Email" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-2" asp-for="Password"></label>
-        <div class=" col-md-10">
-            <input asp-for="Password" class="form-control" />
-            <span asp-validation-for="Password" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-2" asp-for="ConfirmPassword"></label>
-        <div class=" col-md-10">
-            <input asp-for="ConfirmPassword" class="form-control" />
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group row">
-        <label class="col-md-2" asp-for="RoleName"></label>
-        <div class=" col-md-10">
-            <select asp-for="RoleName"
-                    asp-items="@Web_prog_Project.Utility.Helper.GetRolesForDropDown(User.IsInRole(Web_prog_Project.Utility.Helper.Admin))"
-                    class="form-control"></select>
-            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-10 offset-md-2">
-            <input type="submit" value="Register" class="btn btn-success" />
-        </div>
-    </div>
-    <p class="col-md-10 offset-md-2">
-        <a asp-action="Login">Sign In</a>
-    </p>
-</form>
+</div>
 
 @section Scripts {
-    @{
-        <partial name="_ValidationScriptsPartial" />
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

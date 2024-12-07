@@ -1,27 +1,28 @@
 ﻿@model IEnumerable<Web_prog_Project.Models.EmergencyAnnouncement>
 
-
-<h2>Emergency Announcements</h2>
+<h2 class="text-center my-4">Emergency Announcements</h2>
 
 <!-- Button to create a new emergency announcement -->
-<a href="@Url.Action("Create", "Emergency")" class="btn btn-primary mb-3">Create New Announcement</a>
+<div class="text-center mb-4">
+    <a href="@Url.Action("Create", "Emergency")" class="btn btn-primary">Create New Announcement</a>
+</div>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Content</th>
-            <th>Created At</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var announcement in Model)
-        {
-            <tr>
-                <td>@announcement.Title</td>
-                <td>@announcement.Content</td>
-                <td>@announcement.CreatedAt.ToString("g")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+    @foreach (var announcement in Model)
+    {
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-exclamation-triangle-fill text-danger fs-3 me-3"></i>
+                        <h5 class="card-title mb-0">@announcement.Title</h5>
+                    </div>
+                    <p class="card-text">@announcement.Content</p>
+                </div>
+                <div class="card-footer text-muted">
+                    Created on: @announcement.CreatedAt.ToString("g")
+                </div>
+            </div>
+        </div>
+    }
+</div>

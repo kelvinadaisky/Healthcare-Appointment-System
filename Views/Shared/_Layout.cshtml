@@ -13,8 +13,62 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/qtip2/3.0.3/jquery.qtip.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/fullcalendar@5.10.2/main.min.css" />
-
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2020.2.513/styles/kendo.default-v2.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header, footer {
+            flex-shrink: 0;
+        }
+        .navbar {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+        }
+
+        .nav-link {
+            color: #fff !important;
+        }
+
+            .nav-link:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                border-radius: 5px;
+            }
+
+        .btn {
+            font-size: 0.9rem;
+        }
+
+        footer {
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+
+            footer small {
+                color: #f1f1f1;
+            }
+
+        .container {
+            margin-top: 20px;
+            flex: 1;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -61,42 +115,13 @@
         @RenderSection("Scripts", required: false)
     </div>
 
-    <footer class="border-top footer text-white bg-primary ">
+    <footer class="border-top footer text-white bg-primary">
         <div class="container">
-           @*  <div class="row">
-                <div class="col-md-3">
-                    <a class="navbar-brand" href="#"><img src="your-logo.png" height="35" alt="Logo"></a>
-                </div>
-                <div class="col-md-3">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Follow Us</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">Instagram</a></li>
-                        <li><a href="#">LinkedIn</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-3">
-                    <h5>Contact</h5>
-                    <p>1234 Street Name, City, Country</p>
-                    <p>Email: kelvinadaiskyirutingabo2002@gmail.com</p>
-                    <p>Phone: +123 456 7890</p>
-                </div>
-            </div> *@
             <div class="text-center p-3">
                 <small>&copy; 2024 KidCare Navigator. Designed by Stacy Kelvin Adaisky.</small>
             </div>
         </div>
-    </footer> 
+    </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
