@@ -1,0 +1,74 @@
+﻿@model Web_prog_Project.Models.AssistantShift
+
+<div class="container mt-4">
+    <h2 class="text-primary mb-4">Edit Shift</h2>
+
+    <form method="post" asp-action="Edit" class="p-4 shadow-sm rounded bg-light">
+        <input asp-for="AssistantId" hidden />
+        <input asp-for="Id" hidden />
+
+        <div class="border p-3">
+            <!-- Shift Date -->
+            <div class="mb-3 row p-1">
+                <label asp-for="ShiftDate" class="form-label fw-bold">Shift Date</label>
+                <input asp-for="ShiftDate" class="form-control" type="date" />
+                <span asp-validation-for="ShiftDate" class="text-danger"></span>
+            </div>
+
+            <!-- Start Time -->
+            <div class="mb-3 row p-1">
+                <label asp-for="StartTime" class="form-label fw-bold">Start Time</label>
+                <input asp-for="StartTime" class="form-control" type="time" />
+                <span asp-validation-for="StartTime" class="text-danger"></span>
+            </div>
+
+            <!-- End Time -->
+            <div class="mb-3 row p-1">
+                <label asp-for="EndTime" class="form-label fw-bold">End Time</label>
+                <input asp-for="EndTime" class="form-control" type="time" />
+                <span asp-validation-for="EndTime" class="text-danger"></span>
+            </div>
+
+            <!-- Assistant -->
+            <div class="mb-3 row p-1">
+                <label asp-for="AssistantId" class="form-label fw-bold">Assistant</label>
+                <select asp-for="AssistantId" asp-items="@(ViewData["Assistants"] as List<SelectListItem>)" class="form-control">
+                    <option value="">-- Select Assistant --</option>
+                </select>
+                <span asp-validation-for="AssistantId" class="text-danger"></span>
+            </div>
+
+            <!-- Department -->
+            <div class="mb-3 row p-1">
+                <label asp-for="DepartmentId" class="form-label fw-bold">Department</label>
+                <select asp-for="DepartmentId" asp-items="@(ViewData["Departments"] as List<SelectListItem>)" class="form-control">
+                    <option value="">-- Select Department --</option>
+                </select>
+                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-6 col-md-3">
+                    <button type="submit" class="btn btn-primary form-control">Update</button>
+                </div>
+                <div class="col-6 col-md-3">
+                    <a asp-controller="AssistantShift" asp-action="List" class="btn btn-secondary border form-control">
+                        Back to List
+                    </a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
+
+<style>
+    .form-label.fw-bold {
+        font-weight: 600;
+    }
+</style>

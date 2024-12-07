@@ -1,0 +1,38 @@
+﻿@model IEnumerable<Web_prog_Project.Models.AssistantShift>
+
+<div class="container mt-4">
+    <h2 class="text-primary mb-3">All Shifts</h2>
+
+    <table class="table table-striped">
+        <thead class="table-primary">
+            <tr>
+                <th>Assistant</th>
+                <th>Department</th>
+                <th>Shift Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var shift in Model)
+            {
+                <tr>
+                    <td>@shift.Assistant.FirstName @shift.Assistant.LastName</td>
+                    <td>@shift.Department.Name</td>
+                    <td>@shift.ShiftDate.ToString("yyyy-MM-dd")</td>
+                    <td>@shift.StartTime.ToString("hh\\:mm")</td>
+                    <td>@shift.EndTime.ToString("hh\\:mm")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@shift.Id" class="btn btn-sm btn-primary">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@shift.Id" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash-fill"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -11,7 +11,7 @@ namespace Web_prog_Project.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
 
         public AssistantController(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
-        { 
+        {
             _db = db;
             _userManager = userManager;
 
@@ -61,9 +61,9 @@ namespace Web_prog_Project.Controllers
 
         public IActionResult Edit(int? id)
         {
-            if(id == null || id == 0)
+            if (id == null || id == 0)
             {
-                return NotFound();  
+                return NotFound();
             }
             Assistant? assistantFromDb = _db.Assistants.Find(id);
             if (assistantFromDb == null)
@@ -99,7 +99,7 @@ namespace Web_prog_Project.Controllers
 
                 }
 
-            
+
             }
             return View();
 
@@ -117,7 +117,7 @@ namespace Web_prog_Project.Controllers
             }
             return View(assistantFromDb);
         }
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public IActionResult DeletePost(int? id)
         {
             Assistant? obj = _db.Assistants.Find(id);

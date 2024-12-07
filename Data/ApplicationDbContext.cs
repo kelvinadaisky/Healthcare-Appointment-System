@@ -20,7 +20,7 @@ namespace Web_prog_Project.Data
         public DbSet<Assistant> Assistants { get; set; }
         public DbSet<FacultyMember> FacultyMembers { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<AssistantShift> AssistantShifts { get; set; } 
+        public DbSet<AssistantShift> AssistantShifts { get; set; }
         public DbSet<EmergencyAnnouncement> EmergencyAnnouncements { get; set; }
 
 
@@ -29,7 +29,7 @@ namespace Web_prog_Project.Data
         {
             base.OnModelCreating(modelBuilder);
 
-          
+
             modelBuilder.Entity<FacultyMember>()
                 .HasOne<Department>()
                 .WithMany()
@@ -50,4 +50,3 @@ namespace Web_prog_Project.Data
         }
     }
 }
-    

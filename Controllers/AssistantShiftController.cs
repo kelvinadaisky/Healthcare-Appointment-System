@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Web_prog_Project.Data;
@@ -9,23 +10,23 @@ namespace Web_prog_Project.Controllers
 {
     public class AssistantShiftController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext _db;
 
         public AssistantShiftController(ApplicationDbContext context)
         {
-            _context = context;
+            _db = context;
         }
 
         // GET: Shift/Create
         public IActionResult Create()
         {
-            ViewData["Assistants"] = _context.Assistants.Select(a => new SelectListItem
+            ViewData["Assistants"] = _db.Assistants.Select(a => new SelectListItem
             {
                 Value = a.AssistantId.ToString(),
                 Text = a.FirstName,
             }).ToList();
 
-            ViewData["Departments"] = _context.Departments.Select(d => new SelectListItem
+            ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
             {
                 Value = d.DepartmentId.ToString(),
                 Text = d.Name
@@ -39,7 +40,7 @@ namespace Web_prog_Project.Controllers
         public async Task<IActionResult> Create(AssistantShift shift)
         {
             // Check if an assistant already has a shift on the same day in another department
-            bool isDuplicateShift = await _context.AssistantShifts
+            bool isDuplicateShift = await _db.AssistantShifts
                 .AnyAsync(s => s.AssistantId == shift.AssistantId &&
                                s.ShiftDate.Date == shift.ShiftDate.Date &&
                                s.DepartmentId != shift.DepartmentId);
@@ -52,18 +53,18 @@ namespace Web_prog_Project.Controllers
             if (ModelState.IsValid)
             {
 
-                _context.AssistantShifts.Add(shift);
-                await _context.SaveChangesAsync();
+                _db.AssistantShifts.Add(shift);
+                await _db.SaveChangesAsync();
                 TempData["success"] = "Shift added successfully";
                 return RedirectToAction("Schedule");
             }
-            ViewData["Assistants"] = _context.Assistants.Select(a => new SelectListItem
+            ViewData["Assistants"] = _db.Assistants.Select(a => new SelectListItem
             {
                 Value = a.AssistantId.ToString(),
                 Text = a.FirstName,
             }).ToList();
 
-            ViewData["Departments"] = _context.Departments.Select(d => new SelectListItem
+            ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
             {
                 Value = d.DepartmentId.ToString(),
                 Text = d.Name
@@ -74,7 +75,7 @@ namespace Web_prog_Project.Controllers
         public async Task<IActionResult> Schedule()
         {
             // Fetch the assistant shifts, including the assistant's name and shift date
-            var shifts = await _context.AssistantShifts
+            var shifts = await _db.AssistantShifts
                 .Include(s => s.Assistant)  // Include the Assistant entity
                 .ToListAsync();
 
@@ -93,11 +94,111 @@ namespace Web_prog_Project.Controllers
             }).ToList();
             // Pass the events to the view
             ViewData["Shifts"] = events;
-            ViewData["Departments"] = await _context.Departments.ToListAsync(); // Fetch departments
+            ViewData["Departments"] = await _db.Departments.ToListAsync(); // Fetch departments
 
 
             return View();
         }
 
+        public IActionResult List()
+        {
+            var shifts = _db.AssistantShifts.Include(s => s.Department).Include(s => s.Assistant).ToList();
+            return View(shifts);
+        }
+
+        public IActionResult Edit(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            AssistantShift? assistantShiftFromDb = _db.AssistantShifts
+                .Include(s => s.Assistant) // Include the Assistant entity
+                .Include(s => s.Department) // Include the Department entity
+                .FirstOrDefault(s => s.Id == id);
+
+            if (assistantShiftFromDb == null)
+            {
+                return NotFound();
+            }
+
+            // Populate ViewData for Assistants and Departments
+            ViewData["Assistants"] = _db.Assistants.Select(a => new SelectListItem
+            {
+                Value = a.AssistantId.ToString(),
+                Text = a.FirstName,
+            }).ToList();
+
+            ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
+            {
+                Value = d.DepartmentId.ToString(),
+                Text = d.Name
+            }).ToList();
+
+            return View(assistantShiftFromDb);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(AssistantShift obj)
+        {
+            if (ModelState.IsValid)
+            {
+                // Update assistant shift details in the database
+                _db.AssistantShifts.Update(obj);
+                _db.SaveChanges();
+
+                TempData["success"] = "Shift updated successfully";
+                return RedirectToAction("Schedule");
+            }
+
+            // Repopulate ViewData if the model state is invalid
+            ViewData["Assistants"] = _db.Assistants.Select(a => new SelectListItem
+            {
+                Value = a.AssistantId.ToString(),
+                Text = a.FirstName,
+            }).ToList();
+
+            ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
+            {
+                Value = d.DepartmentId.ToString(),
+                Text = d.Name
+            }).ToList();
+
+            return View(obj);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            AssistantShift? assistantFromDb = _db.AssistantShifts.Find(id);
+            if (assistantFromDb == null)
+            {
+                return NotFound();
+            }
+            return View(assistantFromDb);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeletePost(int? id)
+        {
+            AssistantShift? obj = _db.AssistantShifts.Find(id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+
+            // Remove assistant from the database
+            _db.AssistantShifts.Remove(obj);
+            _db.SaveChanges();
+
+            TempData["success"] = "Assistant and associated user deleted successfully";
+            return RedirectToAction("Schedule");
+
+
+        }
     }
 }
