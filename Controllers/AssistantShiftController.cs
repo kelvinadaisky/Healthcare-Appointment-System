@@ -141,33 +141,46 @@ namespace Web_prog_Project.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(AssistantShift obj)
+        public async Task<IActionResult> Edit(AssistantShift obj)
         {
+            // Check if an assistant already has a shift on the same day in another department
+            bool isDuplicateShift = await _db.AssistantShifts
+                .AnyAsync(s => s.AssistantId == obj.AssistantId &&
+                               s.ShiftDate.Date == obj.ShiftDate.Date &&
+                               s.DepartmentId != obj.DepartmentId);
+
+            if (isDuplicateShift)
+            {
+                TempData["error"] = "The assistant already has a shift in another department on this day.";
+                ModelState.AddModelError(string.Empty, "The assistant already has a shift in another department on this day.");
+            }
+
             if (ModelState.IsValid)
             {
                 // Update assistant shift details in the database
                 _db.AssistantShifts.Update(obj);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
 
                 TempData["success"] = "Shift updated successfully";
                 return RedirectToAction("Schedule");
             }
 
             // Repopulate ViewData if the model state is invalid
-            ViewData["Assistants"] = _db.Assistants.Select(a => new SelectListItem
+            ViewData["Assistants"] = await _db.Assistants.Select(a => new SelectListItem
             {
                 Value = a.AssistantId.ToString(),
                 Text = a.FirstName,
-            }).ToList();
+            }).ToListAsync();
 
-            ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
+            ViewData["Departments"] = await _db.Departments.Select(d => new SelectListItem
             {
                 Value = d.DepartmentId.ToString(),
                 Text = d.Name
-            }).ToList();
+            }).ToListAsync();
 
             return View(obj);
         }
+
 
         public IActionResult Delete(int? id)
         {
