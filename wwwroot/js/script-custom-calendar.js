@@ -87,6 +87,11 @@ function onShowModal(obj, isEventDetail) {
         $("#btnSubmit").removeClass("d-none");
         $("#btnDelete").removeClass("d-none");
     } else {
+        const doctorDropdown = document.querySelector("#doctorId");
+        if (doctorDropdown) {
+            const selectedDoctorName = doctorDropdown.options[doctorDropdown.selectedIndex].text;
+            $("#title").val(selectedDoctorName); // Use selected doctor for new appointments
+        }
         $("#appointmentDate").val(obj.startStr + " " + moment().format("hh:mm A"));
         $("#id").val(0);
         $("#btnDelete").addClass("d-none");
@@ -164,7 +169,6 @@ function clearForm() {
     $("#description").val('');
     $("#appointmentDate").val('');
     $("#duration").val('');
-    $("#doctorId").val('');
     $("#patientId").val('');
     $("#id").val('');
     $("#lblPatientName").html('');

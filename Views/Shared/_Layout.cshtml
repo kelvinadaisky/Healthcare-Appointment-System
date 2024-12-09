@@ -23,6 +23,7 @@
             display: flex;
             flex-direction: column;
         }
+
         body {
             font-family: 'Poppins', sans-serif;
             background-color: #f8f9fa;
@@ -34,6 +35,7 @@
         header, footer {
             flex-shrink: 0;
         }
+
         .navbar {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
@@ -89,24 +91,25 @@
                         <li class="nav-item"><a class="nav-link" href="@Url.Action("Index", "Emergency")">Emergencies</a></li>
                         @if (signInManager.IsSignedIn(User))
                         {
-                                    <li class="nav-item text-white nav-link">Hello, @User.Identity.Name! </li>
-                                    <li>
-                                        <form asp-action="LogOff" asp-controller="Account" method="post" class="d-inline">
-                                            <button type="submit" class="nav-item text-white nav-link btn btn-warning ms-2">Log off</button>
-                                        </form>
-                                    </li>                        }
+                            <li class="nav-item text-white nav-link">Hello, @User.Identity.Name! </li>
+                            <li>
+                                <form asp-action="LogOff" asp-controller="Account" method="post" class="d-inline">
+                                    <button type="submit" class="nav-item text-white nav-link btn btn-warning ms-2">Log off</button>
+                                </form>
+                            </li>
+                        }
                         else
                         {
                             <li class="nav-item"><a class="btn btn-outline-light ms-2" id="loginLink" href="@Url.Action("Login", "Account")">Log in</a></li>
                             <li class="nav-item"><a class="btn btn-warning ms-2" id="registerLink" href="@Url.Action("Register", "Account")">Sign up</a></li>
                         }
-                        
+
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    
+
 
     <div class="container">
         <partial name="_Notification" />
