@@ -3,7 +3,8 @@
 $(document).ready(function () {
     $("#appointmentDate").kendoDateTimePicker({
         value: new Date(),
-        dateInput: false
+        dateInput: false,
+
     });
 
     InitializeCalendar();
@@ -102,11 +103,13 @@ function onShowModal(obj, isEventDetail) {
 
 function onSubmitForm() {
     if (checkValidation()) {
+        var appointmentDate = $("#appointmentDate").val();
+        var formattedDate = moment(appointmentDate).format("YYYY-MM-DD HH:mm:ss");
         var requestData = {
             Id: parseInt($("#id").val()),
             Title: $("#title").val(),
             Description: $("#description").val(),
-            StartDate: $("#appointmentDate").val(),
+            StartDate: formattedDate,  // Use the formatted date here
             Duration: $("#duration").val(),
             DoctorId: $("#doctorId").val(),
             PatientId: $("#patientId").val()
@@ -275,3 +278,4 @@ function onDeleteBookedAppointment() {
         }
     });
 }
+
