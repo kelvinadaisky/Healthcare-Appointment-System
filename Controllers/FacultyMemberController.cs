@@ -178,7 +178,6 @@ namespace Web_prog_Project.Controllers
             {
                 return NotFound();
             }
-            // Manually fetch the department name from the Department table
             var departmentName = _db.Departments
                 .Where(d => d.DepartmentId == facultyMember.DepartmentId)
                 .Select(d => d.Name) // assuming the department has a Name property
@@ -206,10 +205,18 @@ namespace Web_prog_Project.Controllers
             {
                 return NotFound();
             }
+          
             // Find the associated user
             var user = _userManager.FindByEmailAsync(obj.Email).Result;
             if (user != null)
             {
+                // Delete all appointments assigned to the faculty member
+                var appointments = _db.Appointments.Where(a => a.DoctorId == user.Id).ToList();
+                if (appointments.Any())
+                {
+                    _db.Appointments.RemoveRange(appointments);
+                }
+
                 // Remove the user from the role
                 _userManager.RemoveFromRoleAsync(user, "Faculty Member").Wait();
 
@@ -224,6 +231,7 @@ namespace Web_prog_Project.Controllers
                     TempData["success"] = "Faculty Member and associated user deleted successfully";
                     return RedirectToAction("Index");
                 }
+
 
             }
 

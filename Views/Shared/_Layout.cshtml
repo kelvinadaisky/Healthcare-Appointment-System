@@ -17,6 +17,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
         html, body {
             height: 100%;
             margin: 0;
@@ -100,9 +107,9 @@
                         }
                         else
                         {
-                            <li class="nav-item"><a class="btn btn-outline-light ms-2" id="loginLink" href="@Url.Action("Login", "Account")">Log in</a></li>
-                            <li class="nav-item"><a class="btn btn-warning ms-2" id="registerLink" href="@Url.Action("Register", "Account")">Sign up</a></li>
-                        }
+                            <li class="nav-item"><a class="btn btn-light ms-2" id="loginLink" href="@Url.Action("Login", "Account")">Log in</a></li>
+@*                             <li class="nav-item"><a class="btn btn-warning ms-2" id="registerLink" href="@Url.Action("Register", "Account")">Sign up</a></li>
+ *@                        }
 
                     </ul>
                 </div>

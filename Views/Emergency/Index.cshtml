@@ -2,27 +2,34 @@
 
 <h2 class="text-center my-4">Emergency Announcements</h2>
 
-<!-- Button to create a new emergency announcement -->
-<div class="text-center mb-4">
-    <a href="@Url.Action("Create", "Emergency")" class="btn btn-primary">Create New Announcement</a>
-</div>
+@if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
+{
+    <div class="text-center mb-4">
+        <a href="@Url.Action("Create", "Emergency")" class="btn btn-primary">Create New Announcement</a>
+    </div>
+}
 
-<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    @foreach (var announcement in Model)
-    {
-        <div class="col">
-            <div class="card h-100 shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex align-items-center mb-3">
-                        <i class="bi bi-exclamation-triangle-fill text-danger fs-3 me-3"></i>
-                        <h5 class="card-title mb-0">@announcement.Title</h5>
+
+@if ((User.IsInRole(Web_prog_Project.Utility.Helper.Admin) || User.IsInRole(Web_prog_Project.Utility.Helper.Assistant) || User.IsInRole(Web_prog_Project.Utility.Helper.Doctor)))
+{
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @foreach (var announcement in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-exclamation-triangle-fill text-danger fs-3 me-3"></i>
+                            <h5 class="card-title mb-0">@announcement.Title</h5>
+                        </div>
+                        <p class="card-text">@announcement.Content</p>
                     </div>
-                    <p class="card-text">@announcement.Content</p>
-                </div>
-                <div class="card-footer text-muted">
-                    Created on: @announcement.CreatedAt.ToString("g")
+                    <div class="card-footer text-muted">
+                        Created on: @announcement.CreatedAt.ToString("g")
+                    </div>
                 </div>
             </div>
-        </div>
-    }
-</div>
+        }
+    </div>
+}
+

@@ -69,8 +69,9 @@
 </style>
 
 <script>
-    console.log(@Html.Raw(Json.Serialize(ViewData["Shifts"])));
 
+@*     console.log(@Html.Raw(Json.Serialize(ViewData["Shifts"])));
+ *@
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('shiftCalendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {

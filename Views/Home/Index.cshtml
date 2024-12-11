@@ -4,25 +4,18 @@
 }
 
 <style>
-   
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: Arial, sans-serif;
+    /* Global styles */
+
+    section {
+        margin-top: 20px;
+        margin-bottom: 20px;
     }
 
-    section{
-        margin-top:20px;
-        margin-bottom:20px;
-    }
-
+    /* Hero Section */
     .image-background {
-        background-image: url('https://planbe.eco/wp-content/uploads/2024/08/plan_be_eco_Raportowanie-ESG-w-ochronie-zdrowia-i-branzy-farmaceutycznej_pl-1024x576.png');
+        background-image: url('https://img.freepik.com/premium-photo/healthcare-pediatrician-child-heart-doctor-with-patient-hospital-exam-chest-with-stethoscope-black-girl-smile-pediatric-surgeon-talking-friendly-caring-physician-she-trust_590464-83537.jpg?w=996');
         background-size: cover;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        background-position: center;
         height: 100vh;
         position: relative;
     }
@@ -32,73 +25,43 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        color: white;
         text-align: center;
-        background-color: rgba(0, 0, 0, 0.5); /* Optional: Darken overlay for readability */
+        background-color: rgba(0, 0, 0, 0.7);
         padding: 20px;
+        color: white;
+        border-radius: 10px;
     }
 
-    .description-section {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-left: 40px;
-        padding-right: 40px;
-        color: #333;
-        font-family: Arial, sans-serif;
+        .overlay h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .overlay p {
+            font-size: 1.2rem;
+        }
+
+    /* Card Section */
+    .card {
+        border: none;
+        transition: transform 0.3s ease;
     }
 
-    .description-text {
-        max-width: 60%;
-        line-height: 1.6;
-    }
+        .card:hover {
+            transform: translateY(-5px);
+        }
 
-    .description-text h2 {
-        color: #00ADEF; /* Example color, you may adjust */
-        font-size: 24px;
-        margin-bottom: 20px;
+    /* Emergency Alert Section */
+    .bg-warning {
+        background-color: #ffc107 !important;
     }
-
-    .description-text p {
-        margin-bottom: 10px;
-    }
-
-    .description-image {
-        max-width: 35%;
-        text-align: center;
-    }
-
-    .description-image img {
-        max-width: 100%;
-        height: auto;
-    }
-
 </style>
 
+<!-- Hero Section -->
 <section class="image-background">
     <div class="overlay">
-        <h1 class="display-4">KidCare Navigator</h1>
-        <p class="lead">Hoşgeldiniz! Bu sistem pediatri asistanlarının nöbetlerini ve randevu takibini yapmanızı sağlar.</p>
-    </div>
-</section>
-
-<section class="description-section">
-    <!-- Text content -->
-    <div class="description-text">
-        <h2>KidCare Navigator</h2>
-        <p>Welcome to KidCare Navigator, your one-stop platform for easy and efficient childcare management! Our system is designed to assist parents, caregivers, and educational institutions by offering a comprehensive and secure solution to manage all aspects of childcare.</p>
-        <p>With KidCare Navigator, you can schedule appointments, connect with trusted childcare providers, and access emergency resources from the convenience of your home or office. Whether you're looking for a qualified babysitter, an educator for after-school sessions, or simply need assistance managing your schedule, KidCare Navigator is here to help.</p>
-        <p>Our platform enables video consultations, so you can communicate directly with childcare professionals or teachers. In addition, we keep track of all interactions and important notes, which are safely recorded for your peace of mind.</p>
-        <p>If a caregiver recommends additional activities or resources, you can easily access and share them with other family members or guardians via KidCare Navigator's secure platform.</p>
-        <p>Our goal is to make childcare as seamless as possible, allowing you to focus on what matters most — the well-being and growth of the children in your care.</p>
-        <button>
-            Learn More
-        </button>
-    </div>
-
-    <!-- Image content -->
-    <div class="description-image">
-        <img src="https://img.freepik.com/premium-photo/healthcare-pediatrician-child-heart-doctor-with-patient-hospital-exam-chest-with-stethoscope-black-girl-smile-pediatric-surgeon-talking-friendly-caring-physician-she-trust_590464-83537.jpg?w=996" alt="KidCare Navigator - Childcare Solutions">
+        <h1>Hospital Management System</h1>
+        <p>Efficiently manage schedules, departments, and emergencies in a single platform.</p>
     </div>
 </section>
 
@@ -108,42 +71,52 @@
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Assistant Schedule</h5>
-                    <p class="card-text">View the daily schedule for assistants in various departments like Pediatric Emergency, Intensive Care, and Hematology & Oncology.</p>
-                    <a href="assistant-schedule.html" class="btn btn-primary">View Schedule</a>
+                    <h5 class="card-title">Manage Schedules</h5>
+                    <p class="card-text">Organize and monitor daily schedules for doctors, nurses, and other staff efficiently.</p>
+                    <a href="@Url.Action("Schedule", "AssistantShift")" class="btn btn-primary">View Schedules</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Faculty</h5>
-                    <p class="card-text">Get to know the professors responsible for each department, view their contact details, and request meetings as needed.</p>
-                    <a href="faculty.html" class="btn btn-primary">Meet the Faculty</a>
+                    <h5 class="card-title">Faculty Members</h5>
+                    <p class="card-text">Track Faculty Members info.<br> <br/></p>
+                    <a href="@Url.Action("Index", "FacultyMember")" class="btn btn-primary">Manage Patients</a>
                 </div>
             </div>
         </div>
         <div class="col-md-4">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h5 class="card-title">Departments</h5>
-                    <p class="card-text">Learn more about each department, including bed availability, patient statistics, and other key details to prepare for your duty.</p>
-                    <a href="department-info.html" class="btn btn-primary">Explore Departments</a>
+                    <h5 class="card-title">Department Overview</h5>
+                    <p class="card-text">Access detailed information about departments, staff, and equipment availability.</p>
+                    <a href="@Url.Action("Index", "Department")" class="btn btn-primary">Explore Departments</a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Emergency Alert Section -->
+<!-- Emergency Alerts -->
 <section class="bg-warning text-dark py-5">
     <div class="container">
         <h2 class="text-center">Emergency Alerts</h2>
-        <p class="text-center">Stay updated on urgent situations and notifications through real-time alerts from the administration.</p>
+        <p class="text-center">Stay informed about critical alerts and notifications from hospital administration.</p>
         <div class="text-center">
-            <a href="emergency.html" class="btn btn-danger">View Alerts</a>
+            <a href="@Url.Action("Index", "Emergency")" class="btn btn-danger">View Alerts</a>
         </div>
     </div>
 </section>
+
+<!-- Contact Section -->
+<section class="container my-5">
+    <h2 class="text-center">Contact Us</h2>
+    <p class="text-center">For assistance, contact our support team available 24/7.</p>
+    <div class="text-center">
+        <a href="/Contact" class="btn btn-secondary">Contact Support</a>
+    </div>
+</section>
+
 <!-- Bootstrap JS (Optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
