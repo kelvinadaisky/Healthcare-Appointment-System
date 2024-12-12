@@ -56,15 +56,31 @@
                             </div>
                         }
                     }
-                    <div class="form-group">
-                        <label for="appointmentDate">Start Date Time</label>
-                        <input type="datetime-local" class="form-control" id="appointmentDate" />
-                    </div>
 
-                    <div class="form-group">
-                        <label for="title">Duration</label>
-                        <select id="duration" asp-items="ViewBag.Duration" class="form-control"></select>
-                    </div>
+                    @if (User.IsInRole(Web_prog_Project.Utility.Helper.Admin))
+                    {
+                        <div class="form-group">
+                            <label for="appointmentDate">Start Date Time</label>
+                            <input type="datetime-local" class="form-control" id="appointmentDate" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="title">Duration</label>
+                            <select id="duration" asp-items="ViewBag.Duration" class="form-control"></select>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="form-group">
+                            <label for="appointmentDate">Start Date Time</label>
+                            <input type="datetime-local" class="form-control" id="appointmentDate" readonly />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="title">Duration</label>
+                            <select id="duration" asp-items="ViewBag.Duration" class="form-control" disabled></select>
+                        </div>
+                    }
                     <input type="hidden" id="id" />
                 </div>
                 <div class="modal-footer">
