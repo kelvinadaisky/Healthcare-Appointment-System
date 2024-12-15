@@ -47,6 +47,12 @@ namespace Web_prog_Project.Data
                 .HasOne(s => s.Department) // Use the navigation property
                 .WithMany(d => d.AssistantShifts) // Assuming you have a collection in Department
                 .HasForeignKey(s => s.DepartmentId);
+
+            modelBuilder.Entity<Appointment>()
+                  .HasOne(a => a.Doctor)
+                  .WithMany() // If ApplicationUser has no navigation property for appointments
+                  .HasForeignKey(a => a.DoctorId)
+                  .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
