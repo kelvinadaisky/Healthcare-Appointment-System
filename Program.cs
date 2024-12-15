@@ -24,6 +24,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric = false; // Ne nécessite pas de caractères non alphanumériques
     options.Password.RequireLowercase = false; // Ne nécessite pas de minuscules
     options.Password.RequireUppercase = false; // Ne nécessite pas de majuscules
+
 })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();

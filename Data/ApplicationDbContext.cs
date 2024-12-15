@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Web_prog_Project.Models;
 
@@ -67,6 +68,12 @@ namespace Web_prog_Project.Data
                .HasForeignKey(a => a.Email) // Use Email as the foreign key
                .HasPrincipalKey(u => u.Email) // IdentityUser's Email as principal key
                .OnDelete(DeleteBehavior.Restrict);
+
+            // Ensure no exclusions for Identity tables.
+            modelBuilder.Entity<IdentityUserToken<string>>();
+            modelBuilder.Entity<IdentityUserLogin<string>>();
+            modelBuilder.Entity<IdentityUserClaim<string>>();
+            modelBuilder.Entity<IdentityRoleClaim<string>>();
         }
     }
 }
