@@ -28,6 +28,11 @@ namespace Web_prog_Project.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Assistant obj)
         {
+            if (string.IsNullOrWhiteSpace(obj.Email))
+            {
+                ModelState.AddModelError("Email", "Email is required.");
+            }
+
             if (ModelState.IsValid)
             {
                 // Extract the part before the "@" from the email
@@ -56,7 +61,7 @@ namespace Web_prog_Project.Controllers
                 }
 
             }
-            return View();
+            return View(obj);
         }
 
         public IActionResult Edit(int? id)

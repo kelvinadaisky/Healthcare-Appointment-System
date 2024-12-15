@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web_prog_Project.Data;
 
@@ -11,9 +12,11 @@ using Web_prog_Project.Data;
 namespace Web_prog_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241215150444_AddFacultyMemebrUserRelation")]
+    partial class AddFacultyMemebrUserRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,6 +279,7 @@ namespace Web_prog_Project.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssistantId"));
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("FirstName")
@@ -390,6 +394,7 @@ namespace Web_prog_Project.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("FirstName")
@@ -482,7 +487,8 @@ namespace Web_prog_Project.Migrations
                         .WithMany()
                         .HasForeignKey("Email")
                         .HasPrincipalKey("Email")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -518,7 +524,8 @@ namespace Web_prog_Project.Migrations
                         .WithMany()
                         .HasForeignKey("Email")
                         .HasPrincipalKey("Email")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });

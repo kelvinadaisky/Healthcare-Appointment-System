@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Web_prog_Project.Data;
 
@@ -11,9 +12,11 @@ using Web_prog_Project.Data;
 namespace Web_prog_Project.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241215145224_AddAssistantUserRelation")]
+    partial class AddAssistantUserRelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,6 +279,7 @@ namespace Web_prog_Project.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssistantId"));
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("FirstName")
@@ -390,7 +394,8 @@ namespace Web_prog_Project.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(256)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -409,8 +414,6 @@ namespace Web_prog_Project.Migrations
                     b.HasKey("FacultyMemberId");
 
                     b.HasIndex("DepartmentId");
-
-                    b.HasIndex("Email");
 
                     b.ToTable("FacultyMembers");
                 });
@@ -482,7 +485,8 @@ namespace Web_prog_Project.Migrations
                         .WithMany()
                         .HasForeignKey("Email")
                         .HasPrincipalKey("Email")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -513,14 +517,6 @@ namespace Web_prog_Project.Migrations
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Web_prog_Project.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("Email")
-                        .HasPrincipalKey("Email")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Web_prog_Project.Models.Assistant", b =>

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Web_prog_Project.Models
 {
@@ -21,9 +22,12 @@ namespace Web_prog_Project.Models
         [DisplayName("Phone Number")]
         public string Phone { get; set; }
 
-        [EmailAddress]
         [DisplayName("Email Address")]
-        public string Email { get; set; }
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        public string? Email { get; set; }
+        [ForeignKey("Email")]
+        public ApplicationUser? User { get; set; }
 
         // Foreign Key for Department
         [Required]

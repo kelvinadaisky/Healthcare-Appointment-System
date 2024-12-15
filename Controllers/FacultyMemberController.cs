@@ -59,6 +59,11 @@ namespace Web_prog_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FacultyMember obj)
         {
+            if (string.IsNullOrWhiteSpace(obj.Email))
+            {
+                ModelState.AddModelError("Email", "Email is required.");
+            }
+
             if (ModelState.IsValid)
             {
                 // Extract the part before the "@" from the email

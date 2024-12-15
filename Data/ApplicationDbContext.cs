@@ -53,6 +53,20 @@ namespace Web_prog_Project.Data
                   .WithMany() // If ApplicationUser has no navigation property for appointments
                   .HasForeignKey(a => a.DoctorId)
                   .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Assistant>()
+                .HasOne(a => a.User) // Navigation property in Assistant
+                .WithMany() // IdentityUser does not have a collection of Assistants
+                .HasForeignKey(a => a.Email) // Use Email as the foreign key
+                .HasPrincipalKey(u => u.Email) // IdentityUser's Email as principal key
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<FacultyMember>()
+               .HasOne(a => a.User) // Navigation property in Assistant
+               .WithMany() // IdentityUser does not have a collection of Assistants
+               .HasForeignKey(a => a.Email) // Use Email as the foreign key
+               .HasPrincipalKey(u => u.Email) // IdentityUser's Email as principal key
+               .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
