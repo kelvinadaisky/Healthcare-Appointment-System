@@ -70,10 +70,10 @@ namespace Web_prog_Project.Data
                .OnDelete(DeleteBehavior.Restrict);
 
             // Ensure no exclusions for Identity tables.
-            modelBuilder.Entity<IdentityUserToken<string>>();
-            modelBuilder.Entity<IdentityUserLogin<string>>();
-            modelBuilder.Entity<IdentityUserClaim<string>>();
-            modelBuilder.Entity<IdentityRoleClaim<string>>();
+            //modelBuilder.Entity<IdentityUserToken<string>>();
+            //modelBuilder.Entity<IdentityUserLogin<string>>();
+            //modelBuilder.Entity<IdentityUserClaim<string>>();
+            //modelBuilder.Entity<IdentityRoleClaim<string>>();
         }
     }
 }
