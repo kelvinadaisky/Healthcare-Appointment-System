@@ -136,6 +136,10 @@ namespace Web_prog_Project.Controllers
             var user = _userManager.FindByEmailAsync(obj.Email).Result;
             if (user != null)
             {
+                // Remove the assistant from the database first
+                _db.Assistants.Remove(obj);
+                _db.SaveChanges();
+
                 // Remove the user from the role
                 _userManager.RemoveFromRoleAsync(user, "Assistant").Wait();
 
@@ -143,10 +147,6 @@ namespace Web_prog_Project.Controllers
                 var result = _userManager.DeleteAsync(user).Result;
                 if (result.Succeeded)
                 {
-                    // Remove assistant from the database
-                    _db.Assistants.Remove(obj);
-                    _db.SaveChanges();
-
                     TempData["success"] = "Assistant and associated user deleted successfully";
                     return RedirectToAction("Index");
                 }

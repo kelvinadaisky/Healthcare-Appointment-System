@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="text-center my-4">Admin Panel</h2>
+<p class="text-center text-muted mb-5">
+    Manage all aspects of the hospital's operations, including announcements, staff, departments, and schedules, from one unified dashboard.
+</p>
+
+<div class="row g-4">
+    <!-- Emergency Announcements -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">Emergency Announcements</h5>
+                <p class="card-text text-muted">
+                    Post and manage emergency alerts to keep everyone informed during critical situations.
+                </p>
+                <a href="@Url.Action("Index", "Emergency")" class="btn btn-primary w-100">Manage Announcements</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assistants -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">Assistants</h5>
+                <p class="card-text text-muted">
+                    Add, edit, and manage information about all the assistants working in the pediatrics department.
+                </p>
+                <a href="@Url.Action("Index", "Assistant")" class="btn btn-primary w-100">Manage Assistants</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Faculty Members -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">Faculty Members</h5>
+                <p class="card-text text-muted">
+                    Oversee and update details about the faculty members responsible for various departments.
+                </p>
+                <a href="@Url.Action("Index", "FacultyMember")" class="btn btn-primary w-100">Manage Faculty</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Departments -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">Departments</h5>
+                <p class="card-text text-muted">
+                    View and manage department details, including bed availability and patient statistics.
+                </p>
+                <a href="@Url.Action("Index", "Department")" class="btn btn-primary w-100">Manage Departments</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Assistant Shifts -->
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+                <h5 class="card-title">Assistant Shifts</h5>
+                <p class="card-text text-muted">
+                    Assign and update shift schedules for assistants in various pediatric units.
+                </p>
+                <a href="@Url.Action("Create", "AssistantShift")" class="btn btn-primary w-100">Manage Shifts</a>
+            </div>
+        </div>
+    </div>
+</div>

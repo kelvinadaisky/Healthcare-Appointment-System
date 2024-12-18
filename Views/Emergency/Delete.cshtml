@@ -1,0 +1,15 @@
+﻿@model Web_prog_Project.Models.EmergencyAnnouncement
+
+<h2>Delete Emergency Announcement</h2>
+<h4>Are you sure you want to delete this announcement?</h4>
+<div>
+    <h5>Title: @Model.Title</h5>
+    <p>Content: @Model.Content</p>
+    <p>Created At: @Model.CreatedAt.ToString("g")</p>
+
+    <form method="post" asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>

@@ -41,7 +41,6 @@ namespace Web_prog_Project.Controllers
                 _db.EmergencyAnnouncements.Add(announcement);
                 _db.SaveChanges();
 
-                // Send email to all users asynchronously
                 await SendEmailToAllUsersAsync(announcement);
 
                 TempData["success"] = "Emergency announcement added successfully.";
@@ -71,6 +70,33 @@ namespace Web_prog_Project.Controllers
             }
             TempData["emailSuccess"] = "Emergency announcement emails sent to all users.";
 
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var announcement = _db.EmergencyAnnouncements.Find(id);
+            if (announcement == null)
+            {
+                return NotFound();
+            }
+            return View(announcement);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var announcement = _db.EmergencyAnnouncements.Find(id);
+            if (announcement == null)
+            {
+                return NotFound();
+            }
+
+            _db.EmergencyAnnouncements.Remove(announcement);
+            _db.SaveChanges();
+
+            TempData["success"] = "Emergency announcement deleted successfully.";
+            return RedirectToAction("Index");
         }
     }
 }

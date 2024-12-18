@@ -222,17 +222,16 @@ namespace Web_prog_Project.Controllers
                     _db.Appointments.RemoveRange(appointments);
                 }
 
+                _db.FacultyMembers.Remove(obj);
+                _db.SaveChanges();
+
                 // Remove the user from the role
                 _userManager.RemoveFromRoleAsync(user, "Faculty Member").Wait();
 
                 // Delete the user from UserManager
                 var result = _userManager.DeleteAsync(user).Result;
                 if (result.Succeeded)
-                {
-                    // Remove assistant from the database
-                    _db.FacultyMembers.Remove(obj);
-                    _db.SaveChanges();
-
+                {              
                     TempData["success"] = "Faculty Member and associated user deleted successfully";
                     return RedirectToAction("Index");
                 }
