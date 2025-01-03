@@ -10,7 +10,7 @@ namespace Web_prog_Project.Utility
     {
         public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            MailjetClient client = new MailjetClient("f6b82db6b4047392d8f3eef35aea750c", "42c01c4df284fe593bb3248cf5f6c588")
+            MailjetClient client = new MailjetClient("PK")
             {
 
             };
