@@ -173,16 +173,15 @@ namespace Web_prog_Project.Services
 
         public List<AssistantVM> GetPatientInfo(string patientId)
         {
-            // Vérifiez si le patientId est null ou vide
             if (string.IsNullOrEmpty(patientId))
             {
-                return new List<AssistantVM>(); // Retourne une liste vide si l'ID n'est pas valide
+                return new List<AssistantVM>(); 
             }
 
             var patients = (from user in _db.Users
                             join userRoles in _db.UserRoles on user.Id equals userRoles.UserId
                             join roles in _db.Roles.Where(x => x.Name == Helper.Assistant) on userRoles.RoleId equals roles.Id
-                            where user.Id == patientId // Filtrer par patientId
+                            where user.Id == patientId 
                             select new AssistantVM
                             {
                                 Id = user.Id,

@@ -16,7 +16,6 @@ namespace Web_prog_Project.Data
             optionsBuilder.LogTo(Console.WriteLine);  // Logs queries to the console
         }
 
-        // DbSet properties should be at the class level
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Assistant> Assistants { get; set; }
         public DbSet<FacultyMember> FacultyMembers { get; set; }
@@ -43,7 +42,7 @@ namespace Web_prog_Project.Data
                 .HasForeignKey(s => s.AssistantId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // Configure Shift -> Department relationship
+            // Configure Shift and  Department relationship
             modelBuilder.Entity<AssistantShift>()
                 .HasOne(s => s.Department) // Use the navigation property
                 .WithMany(d => d.AssistantShifts) // Assuming you have a collection in Department
@@ -64,16 +63,11 @@ namespace Web_prog_Project.Data
 
             modelBuilder.Entity<FacultyMember>()
                .HasOne(a => a.User) // Navigation property in Assistant
-               .WithMany() // IdentityUser does not have a collection of Assistants
+               .WithMany() 
                .HasForeignKey(a => a.Email) // Use Email as the foreign key
                .HasPrincipalKey(u => u.Email) // IdentityUser's Email as principal key
                .OnDelete(DeleteBehavior.Restrict);
 
-            // Ensure no exclusions for Identity tables.
-            //modelBuilder.Entity<IdentityUserToken<string>>();
-            //modelBuilder.Entity<IdentityUserLogin<string>>();
-            //modelBuilder.Entity<IdentityUserClaim<string>>();
-            //modelBuilder.Entity<IdentityRoleClaim<string>>();
         }
     }
 }

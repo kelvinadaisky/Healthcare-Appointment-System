@@ -20,14 +20,12 @@ namespace Web_prog_Project.Controllers
             _emailSender = emailSender;
         }
 
-        // View Emergency Announcements
         public IActionResult Index()
         {
             var announcements = _db.EmergencyAnnouncements.OrderByDescending(e => e.CreatedAt).ToList();
             return View(announcements);
         }
 
-        // Create New Announcement
         public IActionResult Create()
         {
             return View();
@@ -64,7 +62,6 @@ namespace Web_prog_Project.Controllers
                 }
                 catch (Exception ex)
                 {
-                    // Log or handle email sending errors
                     Console.WriteLine($"Error sending email to {user.Email}: {ex.Message}");
                 }
             }

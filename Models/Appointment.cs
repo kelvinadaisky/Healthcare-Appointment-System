@@ -9,7 +9,6 @@
         public DateTime EndDate { get; set; }
         public int Duration { get; set; }
         public string? DoctorId { get; set; }
-        // Foreign key for Doctor
         public virtual ApplicationUser? Doctor { get; set; }
         public string? PatientId { get; set; }
         public bool IsDoctorApproved { get; set; }

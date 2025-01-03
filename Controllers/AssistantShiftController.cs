@@ -17,7 +17,6 @@ namespace Web_prog_Project.Controllers
             _db = context;
         }
 
-        // GET: Shift/Create
         public IActionResult Create()
         {
             ViewData["Assistants"] = _db.Assistants.Select(a => new SelectListItem
@@ -76,7 +75,7 @@ namespace Web_prog_Project.Controllers
         {
             // Fetch the assistant shifts, including the assistant's name and shift date
             var shifts = await _db.AssistantShifts
-                .Include(s => s.Assistant)  // Include the Assistant entity
+                .Include(s => s.Assistant) 
                 .ToListAsync();
 
             // Prepare the events for the calendar
@@ -87,9 +86,9 @@ namespace Web_prog_Project.Controllers
                 end = new DateTime(s.ShiftDate.Year, s.ShiftDate.Month, s.ShiftDate.Day, s.EndTime.Hours, s.EndTime.Minutes, 0).ToString("yyyy-MM-ddTHH:mm:ss"),
                 extendedProps = new
                 {
-                    backgroundColor = Helper.GetDepartmentColor(s.DepartmentId), // Get color based on department ID
-                    borderColor = "#162466", // Set a default border color
-                    textColor = "white" // Set a default text color
+                    backgroundColor = Helper.GetDepartmentColor(s.DepartmentId), 
+                    borderColor = "#162466", 
+                    textColor = "white" 
                 }
             }).ToList();
             // Pass the events to the view
@@ -114,8 +113,7 @@ namespace Web_prog_Project.Controllers
             }
 
             AssistantShift? assistantShiftFromDb = _db.AssistantShifts
-                .Include(s => s.Assistant) // Include the Assistant entity
-                .Include(s => s.Department) // Include the Department entity
+                .Include(s => s.Assistant) 
                 .FirstOrDefault(s => s.Id == id);
 
             if (assistantShiftFromDb == null)
@@ -123,7 +121,6 @@ namespace Web_prog_Project.Controllers
                 return NotFound();
             }
 
-            // Populate ViewData for Assistants and Departments
             ViewData["Assistants"] = _db.Assistants.Select(a => new SelectListItem
             {
                 Value = a.AssistantId.ToString(),
@@ -143,7 +140,6 @@ namespace Web_prog_Project.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(AssistantShift obj)
         {
-            // Check if an assistant already has a shift on the same day in another department
             bool isDuplicateShift = await _db.AssistantShifts
                 .AnyAsync(s => s.AssistantId == obj.AssistantId &&
                                s.ShiftDate.Date == obj.ShiftDate.Date &&
@@ -157,7 +153,6 @@ namespace Web_prog_Project.Controllers
 
             if (ModelState.IsValid)
             {
-                // Update assistant shift details in the database
                 _db.AssistantShifts.Update(obj);
                 await _db.SaveChangesAsync();
 
@@ -189,8 +184,8 @@ namespace Web_prog_Project.Controllers
                 return NotFound();
             }
             AssistantShift? assistantShiftFromDb = _db.AssistantShifts
-                .Include(s => s.Assistant) // Include the Assistant entity
-                .Include(s => s.Department) // Include the Department entity
+                .Include(s => s.Assistant)
+                .Include(s => s.Department)
                 .FirstOrDefault(s => s.Id == id);
 
             if (assistantShiftFromDb == null)
@@ -208,7 +203,6 @@ namespace Web_prog_Project.Controllers
                 return NotFound();
             }
 
-            // Remove assistant from the database
             _db.AssistantShifts.Remove(obj);
             _db.SaveChanges();
 

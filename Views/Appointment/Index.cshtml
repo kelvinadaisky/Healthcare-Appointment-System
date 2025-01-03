@@ -54,10 +54,9 @@
         const selectedDoctorName = doctorDropdown.options[doctorDropdown.selectedIndex].text;
         const titleField = document.querySelector("#title");
         if (titleField) {
-            titleField.value = selectedDoctorName; // Dynamically set title
+            titleField.value = selectedDoctorName; 
         }
     }
-        // Mettre à jour le calendrier si nécessaire
         calendar.refetchEvents();
     }
 

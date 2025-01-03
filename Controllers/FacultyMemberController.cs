@@ -45,7 +45,6 @@ namespace Web_prog_Project.Controllers
 
         public IActionResult Create()
         {
-            // Populate Departments for the dropdown
             ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
             {
                 Value = d.DepartmentId.ToString(),
@@ -66,16 +65,13 @@ namespace Web_prog_Project.Controllers
 
             if (ModelState.IsValid)
             {
-                // Extract the part before the "@" from the email
                 string password = obj.Email.Substring(0, obj.Email.IndexOf('@'));
-                // Create the ApplicationUser
                 var user = new ApplicationUser
                 {
-                    UserName = obj.FirstName, // Assuming Email is unique
+                    UserName = obj.FirstName, 
                     Email = obj.Email,
-                    Name = $"{obj.FirstName} {obj.LastName}" // Assuming you have a Name property
+                    Name = $"{obj.FirstName} {obj.LastName}" 
                 };
-                // Create the user with the generated password
                 var result = await _userManager.CreateAsync(user, password);
                 if (result.Succeeded)
                 {
@@ -88,7 +84,6 @@ namespace Web_prog_Project.Controllers
                    
             }
 
-            // Repopulate Departments if model validation fails
             ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
             {
                 Value = d.DepartmentId.ToString(),
@@ -100,14 +95,12 @@ namespace Web_prog_Project.Controllers
 
         public IActionResult Edit(int? id)
         {
-            // Fetch the faculty member by ID
             var facultyMember = _db.FacultyMembers
                 .FirstOrDefault(f => f.FacultyMemberId == id);
             if (id == null || id == 0)
             {
                 return NotFound();
             }
-            // Get the list of departments to populate the dropdown
             var departments = _db.Departments
                 .Select(d => new SelectListItem
                 {
@@ -117,7 +110,6 @@ namespace Web_prog_Project.Controllers
 
 
 
-            // Populate Departments for the dropdown
             ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
             {
                 Value = d.DepartmentId.ToString(),
@@ -142,13 +134,11 @@ namespace Web_prog_Project.Controllers
                     facultyMember.LastName = obj.LastName;
                     facultyMember.Phone = obj.Phone;
                     facultyMember.Email = obj.Email;
-                    facultyMember.DepartmentId = obj.DepartmentId; // Assuming DepartmentName is the DepartmentId as string
+                    facultyMember.DepartmentId = obj.DepartmentId; 
 
-                    // Find the corresponding user in the UserManager by email
                     var user = _userManager.FindByEmailAsync(obj.Email).Result;
                     if (user != null)
                     {
-                        // Update user details (email, name, etc.)
                         user.Name = $"{obj.FirstName} {obj.LastName}";
                         user.UserName = $"{obj.FirstName}";
                         var updateResult = _userManager.UpdateAsync(user).Result;
@@ -165,7 +155,6 @@ namespace Web_prog_Project.Controllers
 
             }
 
-            // Populate Departments for the dropdown
             ViewData["Departments"] = _db.Departments.Select(d => new SelectListItem
             {
                 Value = d.DepartmentId.ToString(),
@@ -185,7 +174,7 @@ namespace Web_prog_Project.Controllers
             }
             var departmentName = _db.Departments
                 .Where(d => d.DepartmentId == facultyMember.DepartmentId)
-                .Select(d => d.Name) // assuming the department has a Name property
+                .Select(d => d.Name) 
                 .FirstOrDefault();
 
             // Create the view model to pass to the view
@@ -194,7 +183,7 @@ namespace Web_prog_Project.Controllers
                 FacultyMemberId = facultyMember.FacultyMemberId,
                 FirstName = facultyMember.FirstName,
                 LastName = facultyMember.LastName,
-                DepartmentName = departmentName, // manually set the department name
+                DepartmentName = departmentName, 
                 Phone = facultyMember.Phone,
                 Email = facultyMember.Email
             };
@@ -211,11 +200,9 @@ namespace Web_prog_Project.Controllers
                 return NotFound();
             }
           
-            // Find the associated user
             var user = _userManager.FindByEmailAsync(obj.Email).Result;
             if (user != null)
             {
-                // Delete all appointments assigned to the faculty member
                 var appointments = _db.Appointments.Where(a => a.DoctorId == user.Id).ToList();
                 if (appointments.Any())
                 {
@@ -225,10 +212,8 @@ namespace Web_prog_Project.Controllers
                 _db.FacultyMembers.Remove(obj);
                 _db.SaveChanges();
 
-                // Remove the user from the role
                 _userManager.RemoveFromRoleAsync(user, "Faculty Member").Wait();
 
-                // Delete the user from UserManager
                 var result = _userManager.DeleteAsync(user).Result;
                 if (result.Succeeded)
                 {              

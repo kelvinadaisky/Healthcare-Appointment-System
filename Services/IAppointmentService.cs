@@ -21,7 +21,7 @@ namespace Web_prog_Project.Services
 
         public Task<int> Delete(int id);
 
-        public Task<int> DeleteBookedAppointment(int id); // Add this line if not already present
+        public Task<int> DeleteBookedAppointment(int id);
 
 
         public Task<int> ConfirmEvent(int id , string patientId);

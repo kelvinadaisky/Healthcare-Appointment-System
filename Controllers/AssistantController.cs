@@ -35,22 +35,20 @@ namespace Web_prog_Project.Controllers
 
             if (ModelState.IsValid)
             {
-                // Extract the part before the "@" from the email
                 string password = obj.Email.Substring(0, obj.Email.IndexOf('@'));
 
                 // Create the ApplicationUser
                 var user = new ApplicationUser
                 {
-                    UserName = obj.FirstName, // Assuming Email is unique
+                    UserName = obj.FirstName, 
                     Email = obj.Email,
-                    Name = $"{obj.FirstName} {obj.LastName}" // Assuming you have a Name property
+                    Name = $"{obj.FirstName} {obj.LastName}"
                 };
 
                 // Create the user with the generated password
                 var result = await _userManager.CreateAsync(user, password);
                 if (result.Succeeded)
                 {
-                    // Add assistant to the database
                     _db.Assistants.Add(obj);
                     await _db.SaveChangesAsync();
 
@@ -83,11 +81,9 @@ namespace Web_prog_Project.Controllers
             if (ModelState.IsValid)
             {
 
-                // Find the corresponding user in the UserManager by email
                 var user = _userManager.FindByEmailAsync(obj.Email).Result;
                 if (user != null)
                 {
-                    // Update user details (email, name, etc.)
                     user.Name = $"{obj.FirstName} {obj.LastName}";
                     user.UserName = $"{obj.FirstName}";
                     var updateResult = _userManager.UpdateAsync(user).Result;
